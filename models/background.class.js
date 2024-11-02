@@ -1,5 +1,5 @@
 class BackgroundObject extends MovebaleObject {
-    width = 780;
+    width = 720;
     height = 480;
     constructor(imagePath, x) {
         super().loadImage(imagePath);

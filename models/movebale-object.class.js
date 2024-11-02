@@ -5,6 +5,7 @@ class MovebaleObject {
     imgChache = [];
     currentImage = 0;
     speed;
+    otherDirection = false;
 
     loadImage(path) {
         this.img = new Image();
@@ -19,12 +20,20 @@ class MovebaleObject {
         });
     }
 
-    moveRight(speed) {
+    walkRight(speed) {
         setInterval(() => {
-            this.x += speed;
+            if (this.world.keyboard.RIGHT) {
+                this.x += speed;
+            }
         }, 1000 / 60);
     }
-
+    walkLeft(speed) {
+        setInterval(() => {
+            if (this.world.keyboard.LEFT) {
+                this.x -= speed;
+            }
+        }, 1000 / 60);
+    }
     moveLeft(speed) {
         setInterval(() => {
             this.x -= speed;

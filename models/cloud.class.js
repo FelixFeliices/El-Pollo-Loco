@@ -1,7 +1,7 @@
 class Cloud extends MovebaleObject {
     y = 10;
     x = 0;
-    width = 780;
+    width = 720;
     height = 300;
     speed = 0.06;
 
