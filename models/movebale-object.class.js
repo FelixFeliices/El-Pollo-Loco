@@ -3,6 +3,8 @@ class MovebaleObject {
     y = 240;
     img;
     imgChache = [];
+    currentImage = 0;
+    speed;
 
     loadImage(path) {
         this.img = new Image();
@@ -17,12 +19,15 @@ class MovebaleObject {
         });
     }
 
-    moveRight() {
-        onkeydown(39);
-        console.log("Moving right");
+    moveRight(speed) {
+        setInterval(() => {
+            this.x += speed;
+        }, 1000 / 60);
     }
 
-    moveLeft() {
-        console.log("Moving left");
+    moveLeft(speed) {
+        setInterval(() => {
+            this.x -= speed;
+        }, 1000 / 60);
     }
 }

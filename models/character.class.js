@@ -10,23 +10,23 @@ class Character extends MovebaleObject {
         "../assets/img/2_character_pepe/2_walk/W-25.png",
         "../assets/img/2_character_pepe/2_walk/W-26.png",
     ];
+    speed = 1;
+    world;
 
-    currentImage = 0;
     constructor() {
         super().loadImage("../assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_WALKING);
-
         this.animate();
     }
 
     animate() {
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imgChache[path];
-            this.currentImage++;
-        }, 1000 / 6);
+            if (this.world.keyboard.RIGHT) {
+                let i = this.currentImage % this.IMAGES_WALKING.length;
+                let path = this.IMAGES_WALKING[i];
+                this.img = this.imgChache[path];
+                this.currentImage++;
+            }
+        }, 1000 / 13);
     }
-
-    jump() {}
 }

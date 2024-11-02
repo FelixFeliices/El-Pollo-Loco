@@ -8,7 +8,7 @@ class Chicken extends MovebaleObject {
         "assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
         "assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
     ];
-    currentImage = 0;
+    speed = 0.3 + Math.random() * 0.25;
 
     constructor() {
         super().loadImage(
@@ -16,6 +16,7 @@ class Chicken extends MovebaleObject {
         );
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
+        this.moveLeft(this.speed);
     }
     animate() {
         setInterval(() => {
@@ -23,7 +24,6 @@ class Chicken extends MovebaleObject {
             let path = this.IMAGES_WALKING[i];
             this.img = this.imgChache[path];
             this.currentImage++;
-            this.x -= 2.5;
         }, 1000 / 10);
     }
 }

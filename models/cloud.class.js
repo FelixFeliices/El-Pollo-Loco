@@ -3,15 +3,10 @@ class Cloud extends MovebaleObject {
     x = 0;
     width = 780;
     height = 300;
+    speed = 0.06;
 
     constructor() {
         super().loadImage("../assets/img/5_background/layers/4_clouds/1.png");
-        this.animate();
-    }
-
-    animate() {
-        setInterval(() => {
-            this.x -= 0.06;
-        }, 1000 / 60);
+        this.moveLeft(this.speed);
     }
 }
