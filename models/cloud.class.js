@@ -11,7 +11,7 @@ class Cloud extends MovebaleObject {
 
     animate() {
         setInterval(() => {
-            this.x -= 0.02;
-        }, 1);
+            this.x -= 0.06;
+        }, 1000 / 60);
     }
 }
