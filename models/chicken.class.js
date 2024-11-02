@@ -9,6 +9,8 @@ class Chicken extends MovebaleObject {
         "assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
     ];
     speed = 0.3 + Math.random() * 0.25;
+    // chickenSound = new Audio("../audio/chicken.mp3");
+    //     chickenSound.play();
 
     constructor() {
         super().loadImage(

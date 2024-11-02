@@ -12,8 +12,7 @@ class Character extends MovebaleObject {
     ];
     speed = 3.5;
     world;
-    walkingSound = new Audio("audio/walk.mp3");
-    //
+    walkingSound = new Audio("../audio/walk.mp3");
 
     constructor() {
         super().loadImage("../assets/img/2_character_pepe/2_walk/W-21.png");
