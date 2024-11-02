@@ -12,35 +12,33 @@ class Character extends MovebaleObject {
     ];
     speed = 3.5;
     world;
+    walkingSound = new Audio("audio/walk.mp3");
+    //
 
     constructor() {
         super().loadImage("../assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
-        //     this.movmentLeft();
-        //     this.movmentRight();
     }
-
-    // movmentLeft() {
-    //     this.animate();
-    //     this.walkLeft(this.speed);
-    // }
-    // movmentRight() {
-    //     this.animate();
-    //     this.walkRight(this.speed);
-    // }
 
     animate() {
         setInterval(() => {
-            if (this.world.keyboard.RIGHT) {
+            this.walkingSound.playbackRate = 1.5;
+            this.walkingSound.pause();
+            if (
+                this.world.keyboard.RIGHT &&
+                this.x < this.world.level.levelEndX
+            ) {
                 this.x += this.speed;
                 this.otherDirection = false;
+                this.walkingSound.play();
             }
-            if (this.world.keyboard.LEFT) {
+            if (this.world.keyboard.LEFT && this.x > -100) {
                 this.x -= this.speed;
                 this.otherDirection = true;
+                this.walkingSound.play();
             }
-            this.world.camera_x = -this.x;
+            this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
