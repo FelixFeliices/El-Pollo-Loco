@@ -4,13 +4,13 @@ class Chicken extends MovebaleObject {
     width = 60;
     height = 60;
     IMAGES_WALKING = [
-        "assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
-        "assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
-        "assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
+        "../assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
+        "../assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
+        "../assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
     ];
     speed = 0.3 + Math.random() * 0.25;
-    // chickenSound = new Audio("../audio/chicken.mp3");
-    //     chickenSound.play();
+    chickenSound = new Audio("../audio/chicken.mp3");
+    audioVolume = 0.25;
 
     constructor() {
         super().loadImage(
@@ -19,13 +19,11 @@ class Chicken extends MovebaleObject {
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
         this.moveLeft(this.speed);
+        this.chickenSound.volume = this.audioVolume;
     }
     animate() {
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imgChache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_WALKING);
         }, 1000 / 10);
     }
 }

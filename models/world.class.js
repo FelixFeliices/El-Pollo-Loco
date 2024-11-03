@@ -1,13 +1,13 @@
 class World {
     character = new Character();
     level = level1;
-    // enemies = level1.enemies;
-    // cloud = level1.clouds;
-    // backgroundObjects = level1.backgroundObjects;
     ctx;
     canvas;
     keyboard;
     camera_x = 0;
+    firstInteraction = false;
+    indexOfEndboss;
+    distance;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -31,6 +31,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
+        this.checkDistance();
         requestAnimationFrame(() => this.draw());
     }
 
@@ -50,6 +51,19 @@ class World {
         if (mo.otherDirection) {
             this.ctx.restore();
             mo.x = mo.x * -1;
+        }
+    }
+
+    checkDistance() {
+        this.indexOfEndboss = this.level.enemies.findIndex(
+            (enemy) => enemy instanceof Endboss
+        );
+
+        this.endboss = this.level.enemies[this.indexOfEndboss];
+        this.distance = this.endboss.x - this.character.x;
+
+        if (this.distance < 450) {
+            console.log("zu nah");
         }
     }
 }

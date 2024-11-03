@@ -6,6 +6,7 @@ class MovebaleObject {
     currentImage = 0;
     speed;
     otherDirection = false;
+    world;
 
     loadImage(path) {
         this.img = new Image();
@@ -21,22 +22,31 @@ class MovebaleObject {
     }
 
     walkRight(speed) {
-        setInterval(() => {
-            if (this.world.keyboard.RIGHT) {
-                this.x += speed;
-            }
-        }, 1000 / 60);
+        this.x += speed;
+        this.walkingSound.play();
+        this.world.firstInteraction = true;
     }
+
     walkLeft(speed) {
-        setInterval(() => {
-            if (this.world.keyboard.LEFT) {
-                this.x -= speed;
-            }
-        }, 1000 / 60);
+        this.x -= speed;
+        this.walkingSound.play();
+        this.world.firstInteraction = true;
     }
+
     moveLeft(speed) {
         setInterval(() => {
             this.x -= speed;
         }, 1000 / 60);
+    }
+
+    playAnimation(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imgChache[path];
+        this.currentImage++;
+    }
+
+    checkDistance() {
+        console.log(this.x);
     }
 }
