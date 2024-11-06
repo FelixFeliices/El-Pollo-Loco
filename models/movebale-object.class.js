@@ -11,6 +11,35 @@ class MovebaleObject {
     force = 40;
     acceleration = 4.5;
 
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawRectangle(ctx) {
+        if (
+            this instanceof Character ||
+            this instanceof Chicken ||
+            this instanceof Endboss
+        ) {
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    isColliding(mo) {
+        return (
+            this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+        );
+    }
+
+    toNear(mo) {
+        return this.x - mo.x > 50;
+    }
+
     applayGravity(ground) {
         setInterval(() => {
             if (this.isAboveGround(ground) || this.gravity > 0) {
@@ -24,11 +53,6 @@ class MovebaleObject {
         return this.y < 150;
     }
 
-    jump() {
-        this.y = 105;
-        this.gravity = this.force;
-    }
-
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -40,6 +64,11 @@ class MovebaleObject {
             img.src = path;
             this.imgChache[path] = img;
         });
+    }
+
+    jump() {
+        this.y = 105;
+        this.gravity = this.force;
     }
 
     walkRight(speed) {
@@ -65,9 +94,5 @@ class MovebaleObject {
         let path = images[i];
         this.img = this.imgChache[path];
         this.currentImage++;
-    }
-
-    checkDistance() {
-        console.log(this.x);
     }
 }

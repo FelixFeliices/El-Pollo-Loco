@@ -15,7 +15,7 @@ window.addEventListener("keydown", (event) => {
     if (event.keyCode === 39) {
         keyboard.RIGHT = true;
     }
-    if (event.keyCode === 38) {
+    if (event.keyCode === 38 || event.keyCode === 32) {
         keyboard.UP = true;
     }
 });

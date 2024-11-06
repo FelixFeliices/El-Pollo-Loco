@@ -6,8 +6,8 @@ class World {
     keyboard;
     camera_x = 0;
     firstInteraction = false;
-    indexOfEndboss;
-    distance;
+    // indexOfEndboss;
+    // distance;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -15,10 +15,36 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
+        this.checkDistanceEndboss();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    console.log("coliedert");
+                }
+            });
+        }, 1000 / 60);
+    }
+
+    checkDistanceEndboss() {
+        setInterval(() => {
+            console.log(this);
+
+            if (this.level.enemies instanceof Endboss) {
+                this.level.enemies.forEach((enemy) => {
+                    if (this.character.toNear(enemy)) {
+                        console.log("zunah");
+                    }
+                });
+            }
+        }, 1000 / 60);
     }
 
     draw() {
@@ -31,7 +57,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
-        this.checkDistance();
+        // this.checkDistance();
         requestAnimationFrame(() => this.draw());
     }
 
@@ -41,29 +67,39 @@ class World {
 
     addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);
-            this.ctx.scale(-1, 1);
-            mo.x = mo.x * -1;
+            this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+        mo.draw(this.ctx);
+        mo.drawRectangle(this.ctx);
 
         if (mo.otherDirection) {
-            this.ctx.restore();
-            mo.x = mo.x * -1;
+            this.resetflipImage(mo);
         }
     }
 
-    checkDistance() {
-        this.indexOfEndboss = this.level.enemies.findIndex(
-            (enemy) => enemy instanceof Endboss
-        );
+    // checkDistance() {
+    //     this.indexOfEndboss = this.level.enemies.findIndex(
+    //         (enemy) => enemy instanceof Endboss
+    //     );
 
-        this.endboss = this.level.enemies[this.indexOfEndboss];
-        this.distance = this.endboss.x - this.character.x;
+    //     this.endboss = this.level.enemies[this.indexOfEndboss];
+    //     this.distance = this.endboss.x - this.character.x;
 
-        if (this.distance < 450) {
-            console.log("zu nah");
-        }
+    //     if (this.distance < 450) {
+    //         console.log("zu nah");
+    //     }
+    // }
+
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+    resetflipImage(mo) {
+        this.ctx.restore();
+        mo.x = mo.x * -1;
     }
 }
