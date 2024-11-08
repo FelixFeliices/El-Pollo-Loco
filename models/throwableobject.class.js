@@ -1,6 +1,6 @@
 class ThrowableObject extends MovebaleObject {
-    height = 60;
-    width = 60;
+    height = 80;
+    width = 80;
     force = 70;
     gravity = 30;
 
@@ -43,6 +43,10 @@ class ThrowableObject extends MovebaleObject {
         this.applayGravity();
         setInterval(() => {
             this.x += this.force;
+            this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
+            if ("Bei Kollision") {
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+            }
         }, 100);
     }
 }

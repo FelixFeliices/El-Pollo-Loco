@@ -33,12 +33,20 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.THROW) {
-            let bottle = new ThrowableObject(
-                this.character.x + 80,
-                this.character.y + 150
-            );
+            if (this.character.bottleBag > 0) {
+                let bottle = new ThrowableObject(
+                    this.character.x + 80,
+                    this.character.y + 150
+                );
 
-            this.level.throwableObjects.push(bottle);
+                this.character.bottleBag--;
+                if (this.character.bottleBag == 0) {
+                    this.character.bottleBag = 0;
+                }
+
+                this.level.throwableObjects.push(bottle);
+                console.log(this.character.bottleBag);
+            }
         }
     }
 
