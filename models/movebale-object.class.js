@@ -10,6 +10,8 @@ class MovebaleObject {
     gravity = 0;
     force = 40;
     acceleration = 4.5;
+    energy = 100;
+    lastHit = 0;
 
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -34,6 +36,28 @@ class MovebaleObject {
             this.x < mo.x &&
             this.y < mo.y + mo.height
         );
+    }
+
+    hit() {
+        this.energy -= 1;
+        if (this.energy <= 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+
+        return timepassed < 2.5;
+    }
+
+    isDead() {
+        if (this.energy <= 0) {
+            return true;
+        }
     }
 
     applayGravity(ground) {
@@ -91,12 +115,4 @@ class MovebaleObject {
         this.img = this.imgChache[path];
         this.currentImage++;
     }
-
-    // checkDistanceEndboss() {
-    //     setInterval(() => {
-    //         if (this.character.toNear(this.level.enemies[3])) {
-    //             console.log("zunah");
-    //         }
-    //     }, 1000 / 60);
-    // }
 }

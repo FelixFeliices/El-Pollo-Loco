@@ -14,7 +14,6 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        // this.checkDistanceEndboss();
     }
 
     setWorld() {
@@ -28,7 +27,7 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    console.log("coliedert");
+                    this.character.hit();
                 }
             });
         }, 1000 / 60);
@@ -36,6 +35,7 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
@@ -44,7 +44,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
-        // this.checkDistance();
+
         requestAnimationFrame(() => this.draw());
     }
 
