@@ -6,8 +6,6 @@ class World {
     keyboard;
     camera_x = 0;
     firstInteraction = false;
-    // indexOfEndboss;
-    // distance;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -16,11 +14,14 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        this.checkDistanceEndboss();
+        // this.checkDistanceEndboss();
     }
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach((enemy) => {
+            enemy.world = this;
+        });
     }
 
     checkCollisions() {
@@ -30,20 +31,6 @@ class World {
                     console.log("coliedert");
                 }
             });
-        }, 1000 / 60);
-    }
-
-    checkDistanceEndboss() {
-        setInterval(() => {
-            console.log(this);
-
-            if (this.level.enemies instanceof Endboss) {
-                this.level.enemies.forEach((enemy) => {
-                    if (this.character.toNear(enemy)) {
-                        console.log("zunah");
-                    }
-                });
-            }
         }, 1000 / 60);
     }
 
@@ -77,19 +64,6 @@ class World {
             this.resetflipImage(mo);
         }
     }
-
-    // checkDistance() {
-    //     this.indexOfEndboss = this.level.enemies.findIndex(
-    //         (enemy) => enemy instanceof Endboss
-    //     );
-
-    //     this.endboss = this.level.enemies[this.indexOfEndboss];
-    //     this.distance = this.endboss.x - this.character.x;
-
-    //     if (this.distance < 450) {
-    //         console.log("zu nah");
-    //     }
-    // }
 
     flipImage(mo) {
         this.ctx.save();

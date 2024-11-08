@@ -36,10 +36,6 @@ class MovebaleObject {
         );
     }
 
-    toNear(mo) {
-        return this.x - mo.x > 50;
-    }
-
     applayGravity(ground) {
         setInterval(() => {
             if (this.isAboveGround(ground) || this.gravity > 0) {
@@ -95,4 +91,12 @@ class MovebaleObject {
         this.img = this.imgChache[path];
         this.currentImage++;
     }
+
+    // checkDistanceEndboss() {
+    //     setInterval(() => {
+    //         if (this.character.toNear(this.level.enemies[3])) {
+    //             console.log("zunah");
+    //         }
+    //     }, 1000 / 60);
+    // }
 }

@@ -20,7 +20,6 @@ class Endboss extends MovebaleObject {
         "../assets/img/4_enemie_boss_chicken/2_alert/G11.png",
         "../assets/img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
-    speed = 0.1;
     chickenSound = new Audio("../audio/chicken.mp3");
     audioVolume = 0.25;
 
@@ -31,12 +30,30 @@ class Endboss extends MovebaleObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.animate();
-        this.moveLeft(this.speed);
         this.chickenSound.volume = this.audioVolume;
     }
+
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            if (this.toNear(this)) {
+                this.playAnimation(this.IMAGES_ALERT);
+                this.speed = 0;
+                this.x -= this.speed;
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+                this.speed = 0.1;
+                setInterval(() => {
+                    if (this.x > 500) {
+                        this.x -= this.speed;
+                    }
+                }, 1000 / 60);
+            }
         }, 1000 / 2);
+    }
+
+    toNear(mo) {
+        return (
+            this.world.character.x + this.world.character.width - mo.x > -300
+        );
     }
 }
