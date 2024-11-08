@@ -3,6 +3,7 @@ class Character extends MovebaleObject {
     height = 280;
     y = 105;
     speed = 3.5;
+    energy = 10000000000;
 
     IMAGES_WALKING = [
         "../assets/img/2_character_pepe/2_walk/W-21.png",
@@ -59,17 +60,22 @@ class Character extends MovebaleObject {
             this.walkingSound.pause();
             if (
                 this.world.keyboard.RIGHT &&
-                this.x < this.world.level.levelEndX
+                this.x < this.world.level.levelEndX &&
+                !this.isDead()
             ) {
                 this.walkRight(this.speed);
                 this.otherDirection = false;
             }
-            if (this.world.keyboard.LEFT && this.x > -100) {
+            if (this.world.keyboard.LEFT && this.x > -100 && !this.isDead()) {
                 this.walkLeft(this.speed);
                 this.otherDirection = true;
             }
 
-            if (this.world.keyboard.UP && !this.isAboveGround()) {
+            if (
+                this.world.keyboard.UP &&
+                !this.isAboveGround() &&
+                !this.isDead()
+            ) {
                 this.jump();
             }
 
@@ -80,16 +86,20 @@ class Character extends MovebaleObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if (
+                (this.world.keyboard.RIGHT &&
+                    !this.isDead() &&
+                    !this.isHurt()) ||
+                (this.world.keyboard.LEFT && !this.isDead() && !this.isHurt())
+            ) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.isHurt()) {
+            } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
-            console.log(this.energy);
-        }, 120);
+        }, 1000 / 14);
     }
 }
