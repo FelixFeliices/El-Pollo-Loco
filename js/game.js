@@ -18,6 +18,9 @@ window.addEventListener("keydown", (event) => {
     if (event.keyCode === 38 || event.keyCode === 32) {
         keyboard.UP = true;
     }
+    if (event.keyCode === 68) {
+        keyboard.THROW = true;
+    }
 });
 
 window.addEventListener("keyup", (event) => {
@@ -29,5 +32,8 @@ window.addEventListener("keyup", (event) => {
     }
     if (event.keyCode === 38 || event.keyCode === 32) {
         keyboard.UP = false;
+    }
+    if (event.keyCode === 68) {
+        keyboard.THROW = false;
     }
 });
