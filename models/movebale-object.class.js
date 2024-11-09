@@ -18,8 +18,8 @@ class MovebaleObject extends DrawableObject {
     }
 
     isAboveGround() {
-        if (this instanceof ThrowableObject) {
-            return true;
+        if (this instanceof ThrowableObject && !this instanceof Bottle) {
+            return false;
         } else {
             return this.y < 150;
         }

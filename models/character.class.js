@@ -4,7 +4,7 @@ class Character extends MovebaleObject {
     y = 105;
     speed = 3.5;
     energy = 10000000000000000000;
-    bottleBag = 6;
+    bottleBag = 0;
 
     IMAGES_WALKING = [
         "../assets/img/2_character_pepe/2_walk/W-21.png",
