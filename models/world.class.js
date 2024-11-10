@@ -8,6 +8,7 @@ class World {
     firstInteraction = false;
     healthbar = new Healthbar();
     bottelbar = new Bottelbar();
+    firstCollect = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -23,6 +24,9 @@ class World {
         this.level.enemies.forEach((enemy) => {
             enemy.world = this;
         });
+        this.level.throwableObjects.forEach((bottle) => {
+            bottle.world = this;
+        });
     }
 
     run() {
@@ -31,47 +35,58 @@ class World {
             this.checkCollectBottle();
             this.checkThrowObjects();
             this.addNewBottels();
+            console.log(this.firstCollect);
         }, 1000 / 8);
     }
 
     addNewBottels() {
         setInterval(() => {
-            if (this.level.throwableObjects.length == 0) {
+            if (this.character.bottleBag == 0 && this.firstCollect == true) {
                 this.level.throwableObjects.push(new Bottle());
-                this.level.throwableObjects.push(new Bottle());
-                this.level.throwableObjects.push(new Bottle());
+                // this.level.throwableObjects.push(new Bottle());
+                // this.level.throwableObjects.push(new Bottle());
             }
+            console.log(
+                this.character.bottleBag,
+                this.level.throwableObjects.length
+            );
         }, 1000);
     }
 
     checkCollectBottle() {
         this.level.throwableObjects.forEach((bottle, i) => {
             if (this.character.isColliding(bottle)) {
-                this.character.bottleBag++;
-                this.level.throwableObjects.splice(i, 1);
-
-                // this.character.hit();
-                this.bottelbar.setPercentage(this.character.bottleBag);
-                console.log(this.bottelbar);
+                if (!this.checkIsBottleBagFull()) {
+                    this.collectBottle(i);
+                    this.firstCollect = true;
+                }
             }
         });
     }
 
+    checkIsBottleBagFull() {
+        return this.character.bottleBag >= 5;
+    }
+
+    collectBottle(i) {
+        this.character.bottleBag++;
+        this.level.throwableObjects.splice(i, 1);
+        this.bottelbar.setPercentage(this.character.bottleBag);
+    }
+
     checkThrowObjects() {
         if (this.keyboard.THROW) {
-            if (this.character.bottleBag >= 1) {
+            if (this.character.bottleBag > 0) {
                 let bottle = new ThrowableObject(
                     this.character.x + 80,
                     this.character.y + 150
                 );
-
+                this.bottelbar.setPercentage(this.character.bottleBag - 1);
                 this.character.bottleBag--;
-                if (this.character.bottleBag == 0) {
-                    this.character.bottleBag = 0;
-                }
-
                 this.level.throwableObjects.push(bottle);
-                console.log(this.character.bottleBag);
+            }
+            if (this.character.bottleBag == 0) {
+                this.firstCollect = false;
             }
         }
     }

@@ -44,6 +44,7 @@ class ThrowableObject extends MovebaleObject {
         setInterval(() => {
             this.x += this.force;
             this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
+            return true;
         }, 100);
     }
 }
