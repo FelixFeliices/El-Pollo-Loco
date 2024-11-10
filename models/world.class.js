@@ -35,22 +35,29 @@ class World {
             this.checkCollectBottle();
             this.checkThrowObjects();
             this.addNewBottels();
-            console.log(this.firstCollect);
         }, 1000 / 8);
     }
 
     addNewBottels() {
-        setInterval(() => {
-            if (this.character.bottleBag == 0 && this.firstCollect == true) {
-                this.level.throwableObjects.push(new Bottle());
-                // this.level.throwableObjects.push(new Bottle());
-                // this.level.throwableObjects.push(new Bottle());
-            }
-            console.log(
-                this.character.bottleBag,
-                this.level.throwableObjects.length
-            );
-        }, 1000);
+        if (
+            this.character.bottleBag == 0 &&
+            this.firstCollect == true &&
+            this.level.throwableObjects.length <
+                this.level.throwableObjects.length + 5
+        ) {
+            this.level.throwableObjects.push(new Bottle());
+            // this.level.throwableObjects.push(new Bottle());
+            // this.level.throwableObjects.push(new Bottle());
+        } else {
+            return;
+        }
+        console.log(
+            "Bag",
+            this.character.bottleBag,
+            "Insgesamt",
+            this.level.throwableObjects.length,
+            this.level.throwableObjects.length + 5
+        );
     }
 
     checkCollectBottle() {
@@ -84,9 +91,6 @@ class World {
                 this.bottelbar.setPercentage(this.character.bottleBag - 1);
                 this.character.bottleBag--;
                 this.level.throwableObjects.push(bottle);
-            }
-            if (this.character.bottleBag == 0) {
-                this.firstCollect = false;
             }
         }
     }
