@@ -41,23 +41,17 @@ class World {
     addNewBottels() {
         if (
             this.character.bottleBag == 0 &&
-            this.firstCollect == true &&
-            this.level.throwableObjects.length <
-                this.level.throwableObjects.length + 5
+            // this.firstCollect == true &&
+            this.level.throwableObjects.length == 0
         ) {
             this.level.throwableObjects.push(new Bottle());
-            // this.level.throwableObjects.push(new Bottle());
-            // this.level.throwableObjects.push(new Bottle());
-        } else {
-            return;
         }
-        console.log(
-            "Bag",
-            this.character.bottleBag,
-            "Insgesamt",
-            this.level.throwableObjects.length,
-            this.level.throwableObjects.length + 5
-        );
+        // console.log(
+        //     "Bag",
+        //     this.character.bottleBag,
+        //     "Insgesamt",
+        //     this.level.throwableObjects.length
+        // );
     }
 
     checkCollectBottle() {
@@ -85,9 +79,11 @@ class World {
         if (this.keyboard.THROW) {
             if (this.character.bottleBag > 0) {
                 let bottle = new ThrowableObject(
-                    this.character.x + 80,
+                    // this.character.x + 80,
+                    this.character.x + 130,
                     this.character.y + 150
                 );
+                bottle.world = this;
                 this.bottelbar.setPercentage(this.character.bottleBag - 1);
                 this.character.bottleBag--;
                 this.level.throwableObjects.push(bottle);
