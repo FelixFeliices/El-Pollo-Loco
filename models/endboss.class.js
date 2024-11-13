@@ -1,8 +1,8 @@
 class Endboss extends MovebaleObject {
     x = 1700;
-    // y = 240;
-    width = 200;
-    height = 200;
+    y = 140;
+    width = 300;
+    height = 300;
 
     offset = {
         LEFT: 2.5,

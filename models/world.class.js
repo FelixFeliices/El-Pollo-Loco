@@ -17,7 +17,6 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        console.log(this);
     }
 
     setWorld() {
