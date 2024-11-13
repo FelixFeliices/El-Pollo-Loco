@@ -6,6 +6,7 @@ class MovebaleObject extends DrawableObject {
     force = 40;
     acceleration = 4.5;
     energy = 100;
+    damage = 0;
     lastHit = 0;
 
     applayGravity() {
