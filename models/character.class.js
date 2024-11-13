@@ -1,10 +1,18 @@
 class Character extends MovebaleObject {
     width = 150;
     height = 280;
-    y = 105;
-    speed = 3.5;
-    energy = 10000000000000000000;
+    y = 160;
+    // speed = 3.5;
+    speed = 16.5;
+    energy = 1000000;
     bottleBag = 0;
+    damage = 100;
+    offset = {
+        LEFT: 20,
+        RIGHT: 20,
+        UP: 5,
+        DOWN: 5,
+    };
 
     IMAGES_WALKING = [
         "../assets/img/2_character_pepe/2_walk/W-21.png",
@@ -53,6 +61,7 @@ class Character extends MovebaleObject {
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.applayGravity();
+        // this.y = 160;
     }
 
     animate() {
@@ -77,7 +86,7 @@ class Character extends MovebaleObject {
                 !this.isAboveGround() &&
                 !this.isDead()
             ) {
-                this.jump();
+                this.jump(105);
             }
 
             if (this.world.firstInteraction) {
@@ -102,5 +111,11 @@ class Character extends MovebaleObject {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
         }, 1000 / 14);
+    }
+
+    collect(item) {
+        if (item instanceof Bottle) {
+            this.bottleBag++;
+        }
     }
 }

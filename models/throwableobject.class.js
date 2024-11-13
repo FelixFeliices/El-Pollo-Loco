@@ -4,6 +4,9 @@ class ThrowableObject extends MovebaleObject {
     force = 35;
     // acceleration = 6;
     gravity = 60;
+    damage = 10;
+    energy = this.damage;
+    broken;
 
     IMAGES_BOTTLE = [
         "../assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
@@ -31,13 +34,9 @@ class ThrowableObject extends MovebaleObject {
         this.loadImages(this.IMAGES_BOTTLE_ROTATE);
         this.loadImages(this.IMAGES_BOTTLE_SPLASH);
         this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
-
-        // this.x = 1000 * Math.random() + 100;
-        // this.y = 60;
         this.x = x;
         this.y = y;
         this.throw();
-        this.removeBottle();
     }
 
     throw() {
@@ -45,21 +44,11 @@ class ThrowableObject extends MovebaleObject {
         setInterval(() => {
             this.x += this.force;
             this.y += 40;
-            this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
-            // this.removeBottle();
-            console.log(this.y);
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+                this.x -= this.force - 10;
+                this.y -= 35;
+            } else this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
         }, 100);
-    }
-
-    removeBottle() {
-        console.log(this.y);
-
-        if (this.y < 800 && this instanceof ThrowableObject) {
-            // this.world.level.throwableObjects.splice(
-            //     this.world.level.throwableObjects.length - 1,
-            //     1
-            // );
-            console.log("löschen");
-        }
     }
 }

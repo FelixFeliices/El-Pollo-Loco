@@ -6,6 +6,12 @@ class DrawableObject {
     img;
     imgChache = [];
     currentImage = 0;
+    offset = {
+        LEFT: 5,
+        RIGHT: 5,
+        UP: 5,
+        DOWN: 5,
+    };
 
     loadImage(path) {
         this.img = new Image();
@@ -26,12 +32,17 @@ class DrawableObject {
 
     drawRectangle(ctx) {
         if (
-            this instanceof Character ||
             this instanceof Chicken ||
-            this instanceof Endboss
+            this instanceof Endboss ||
+            this instanceof Bottle
         ) {
             ctx.beginPath();
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(
+                this.x + this.offset.LEFT,
+                this.y,
+                this.width - this.offset.LEFT - this.offset.RIGHT,
+                this.height
+            );
             ctx.stroke();
         }
     }

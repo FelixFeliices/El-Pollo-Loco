@@ -1,8 +1,12 @@
 class Endboss extends MovebaleObject {
     x = 1700;
-    y = 240;
+    // y = 240;
     width = 200;
     height = 200;
+
+    chickenSound = new Audio("../audio/chicken.mp3");
+    audioVolume = 0.25;
+
     IMAGES_WALKING = [
         "../assets/img/4_enemie_boss_chicken/1_walk/G1.png",
         "../assets/img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -20,8 +24,18 @@ class Endboss extends MovebaleObject {
         "../assets/img/4_enemie_boss_chicken/2_alert/G11.png",
         "../assets/img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
-    chickenSound = new Audio("../audio/chicken.mp3");
-    audioVolume = 0.25;
+
+    IMAGES_HURT = [
+        "../assets/img/4_enemie_boss_chicken/4_hurt/G21.png",
+        "../assets/img/4_enemie_boss_chicken/4_hurt/G22.png",
+        "../assets/img/4_enemie_boss_chicken/4_hurt/G23.png",
+    ];
+
+    IMAGES_DEAD = [
+        "../assets/img/4_enemie_boss_chicken/5_dead/G24.png",
+        "../assets/img/4_enemie_boss_chicken/5_dead/G25.png",
+        "../assets/img/4_enemie_boss_chicken/5_dead/G26.png",
+    ];
 
     constructor() {
         super().loadImage(
@@ -29,13 +43,22 @@ class Endboss extends MovebaleObject {
         );
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
+        this.applayGravity();
+
         this.chickenSound.volume = this.audioVolume;
     }
 
     animate() {
         setInterval(() => {
-            if (this.toNear(this)) {
+            if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+                // this.jump(20);
+            } else if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.toNear(this)) {
                 this.playAnimation(this.IMAGES_ALERT);
                 this.speed = 0;
                 this.x -= this.speed;
@@ -49,11 +72,5 @@ class Endboss extends MovebaleObject {
                 }, 1000 / 60);
             }
         }, 1000 / 2);
-    }
-
-    toNear(mo) {
-        return (
-            this.world.character.x + this.world.character.width - mo.x > -300
-        );
     }
 }

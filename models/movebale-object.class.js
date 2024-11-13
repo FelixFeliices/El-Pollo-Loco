@@ -8,9 +8,9 @@ class MovebaleObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
-    applayGravity(ground) {
+    applayGravity() {
         setInterval(() => {
-            if (this.isAboveGround(ground) || this.gravity > 0) {
+            if (this.isAboveGround() || this.gravity > 0) {
                 this.y -= this.gravity;
                 this.gravity -= this.acceleration;
             }
@@ -27,19 +27,22 @@ class MovebaleObject extends DrawableObject {
 
     isColliding(mo) {
         return (
-            this.x + this.width > mo.x &&
+            this.x - this.offset.LEFT + this.width > mo.x &&
             this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+            this.x - this.offset.LEFT < mo.x + mo.width &&
+            this.y < mo.y + mo.height &&
+            !this.isHurt()
         );
     }
 
-    hit() {
-        this.energy -= 1;
-        if (this.energy <= 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
+    hit(damage) {
+        if (!this.isHurt()) {
+            this.energy -= damage;
+            if (this.energy <= 0) {
+                this.energy = 0;
+            } else {
+                this.lastHit = new Date().getTime();
+            }
         }
     }
 
@@ -47,7 +50,7 @@ class MovebaleObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
 
-        return timepassed < 2.5;
+        return timepassed < 1;
     }
 
     isDead() {
@@ -56,8 +59,14 @@ class MovebaleObject extends DrawableObject {
         }
     }
 
-    jump() {
-        this.y = 105;
+    toNear(mo) {
+        return (
+            this.world.character.x + this.world.character.width - mo.x > -300
+        );
+    }
+
+    jump(jumpheight) {
+        this.y = jumpheight;
         this.gravity = this.force;
     }
 
