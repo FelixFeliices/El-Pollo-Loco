@@ -4,7 +4,7 @@ class Character extends MovebaleObject {
     y = 160;
     // speed = 3.5;
     speed = 16.5;
-    energy = 1000000;
+    energy = 100;
     bottleBag = 0;
     damage = 100;
     offset = {
@@ -68,47 +68,48 @@ class Character extends MovebaleObject {
         setInterval(() => {
             this.walkingSound.playbackRate = 1.5;
             this.walkingSound.pause();
-            if (
-                this.world.keyboard.RIGHT &&
-                this.x < this.world.level.levelEndX &&
-                !this.isDead()
-            ) {
-                this.walkRight(this.speed);
-                this.otherDirection = false;
-            }
-            if (this.world.keyboard.LEFT && this.x > -100 && !this.isDead()) {
-                this.walkLeft(this.speed);
-                this.otherDirection = true;
-            }
 
-            if (
-                this.world.keyboard.UP &&
-                !this.isAboveGround() &&
-                !this.isDead()
-            ) {
-                this.jump(105);
-            }
+            if (!this.isDead()) {
+                if (
+                    this.world.keyboard.RIGHT &&
+                    this.x < this.world.level.levelEndX
+                ) {
+                    this.walkRight(this.speed);
+                    this.otherDirection = false;
+                }
 
-            if (this.world.firstInteraction) {
-                this.world.level.enemies[0].chickenSound.play();
+                if (this.world.keyboard.LEFT && this.x > -100) {
+                    this.walkLeft(this.speed);
+                    this.otherDirection = true;
+                }
+
+                if (this.world.keyboard.UP && !this.isAboveGround()) {
+                    this.jump(105);
+                }
+
+                if (this.world.firstInteraction) {
+                    this.world.level.enemies[0].chickenSound.play();
+                }
+
+                this.world.camera_x = -this.x + 100;
             }
-            this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        setInterval(() => {
-            if (
-                (this.world.keyboard.RIGHT &&
-                    !this.isDead() &&
-                    !this.isHurt()) ||
-                (this.world.keyboard.LEFT && !this.isDead() && !this.isHurt())
-            ) {
-                this.playAnimation(this.IMAGES_WALKING);
+        let animationInterval = setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                this.y += 20;
+                setTimeout(() => clearInterval(animationInterval), 880);
             } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
+            } else if (
+                (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
+                !this.isHurt() &&
+                !this.isDead()
+            ) {
+                this.playAnimation(this.IMAGES_WALKING);
             }
         }, 1000 / 14);
     }

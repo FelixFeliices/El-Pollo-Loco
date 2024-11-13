@@ -136,7 +136,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawRectangle(this.ctx);
+        // mo.drawRectangle(this.ctx);
 
         if (mo.otherDirection) {
             this.resetflipImage(mo);
