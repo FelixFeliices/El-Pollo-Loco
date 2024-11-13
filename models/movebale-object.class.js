@@ -28,9 +28,9 @@ class MovebaleObject extends DrawableObject {
     isColliding(mo) {
         return (
             this.x - this.offset.LEFT + this.width > mo.x &&
-            this.y + this.height > mo.y &&
+            this.y + this.height + this.offset.UP > mo.y &&
             this.x - this.offset.LEFT < mo.x + mo.width &&
-            this.y < mo.y + mo.height &&
+            this.y + this.offset.UP < mo.y + mo.height &&
             !this.isHurt()
         );
     }

@@ -4,6 +4,13 @@ class Endboss extends MovebaleObject {
     width = 200;
     height = 200;
 
+    offset = {
+        LEFT: 2.5,
+        RIGHT: 2.5,
+        UP: 35,
+        DOWN: 2.5,
+    };
+
     chickenSound = new Audio("../audio/chicken.mp3");
     audioVolume = 0.25;
 

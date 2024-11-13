@@ -31,17 +31,13 @@ class DrawableObject {
     }
 
     drawRectangle(ctx) {
-        if (
-            this instanceof Chicken ||
-            this instanceof Endboss ||
-            this instanceof Bottle
-        ) {
+        if (this instanceof Endboss) {
             ctx.beginPath();
             ctx.rect(
                 this.x + this.offset.LEFT,
-                this.y,
+                this.y + this.offset.UP - this.offset.DOWN,
                 this.width - this.offset.LEFT - this.offset.RIGHT,
-                this.height
+                this.height - this.offset.UP
             );
             ctx.stroke();
         }
