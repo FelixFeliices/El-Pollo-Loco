@@ -81,6 +81,7 @@ class MovebaleObject extends DrawableObject {
             this.world.character.x + this.world.character.width - mo.x > -300
         );
     }
+    // IF statment mit gravity
 
     jump(jumpheight) {
         this.y = jumpheight;
