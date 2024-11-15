@@ -1,7 +1,8 @@
 class Character extends MovebaleObject {
     width = 150;
     height = 280;
-    y = 160;
+    y = 155;
+    baseY = this.y;
     // speed = 3.5;
     speed = 16.5;
     energy = 100;
@@ -60,14 +61,14 @@ class Character extends MovebaleObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
-        this.applayGravity();
-        // this.y = 160;
+        this.applayGravity(this.y);
     }
 
     animate() {
         setInterval(() => {
             this.walkingSound.playbackRate = 1.5;
             this.walkingSound.pause();
+            console.log(this.gravity);
 
             if (!this.isDead()) {
                 if (
@@ -83,8 +84,15 @@ class Character extends MovebaleObject {
                     this.otherDirection = true;
                 }
 
-                if (this.world.keyboard.UP && !this.isAboveGround()) {
+                if (
+                    this.world.keyboard.UP &&
+                    !this.isAboveGround() &&
+                    !this.hasJumped
+                ) {
                     this.jump(105);
+                    this.hasJumped = true;
+                } else if (this.y >= this.baseY) {
+                    this.hasJumped = false;
                 }
 
                 if (this.world.firstInteraction) {
@@ -102,7 +110,7 @@ class Character extends MovebaleObject {
                 setTimeout(() => clearInterval(animationInterval), 880);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
+            } else if (this.isAboveGround(this.y)) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (
                 (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&

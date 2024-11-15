@@ -1,6 +1,7 @@
 class Endboss extends MovebaleObject {
     x = 1700;
     y = 140;
+    baseY = this.y;
     width = 300;
     height = 300;
 
@@ -55,7 +56,7 @@ class Endboss extends MovebaleObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
-        this.applayGravity();
+        this.applayGravity(this.y);
 
         this.chickenSound.volume = this.audioVolume;
     }
@@ -64,7 +65,12 @@ class Endboss extends MovebaleObject {
         setInterval(() => {
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-                // this.jump(20);
+                if (!this.hasJumped) {
+                    this.jump(140);
+                    this.hasJumped = true;
+                } else if (this.y >= this.baseY) {
+                    this.hasJumped = false;
+                }
             } else if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.toNear(this)) {
@@ -74,6 +80,7 @@ class Endboss extends MovebaleObject {
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
                 this.speed = 0.1;
+
                 setInterval(() => {
                     if (this.x > 500) {
                         this.x -= this.speed;

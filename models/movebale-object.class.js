@@ -8,21 +8,37 @@ class MovebaleObject extends DrawableObject {
     energy = 100;
     damage = 0;
     lastHit = 0;
+    baseY = this.y;
+    hasJumped = false;
 
-    applayGravity() {
+    // applayGravity() {
+    //     setInterval(() => {
+    //         if (this.isAboveGround() || this.gravity > 0) {
+    //             this.y -= this.gravity;
+    //             this.gravity -= this.acceleration;
+    //         }
+    //     }, 1000 / 25);
+    // }
+
+    applayGravity(baseY) {
         setInterval(() => {
-            if (this.isAboveGround() || this.gravity > 0) {
+            if (this.isAboveGround(baseY) || this.gravity > 0) {
                 this.y -= this.gravity;
                 this.gravity -= this.acceleration;
+
+                if (!this.isAboveGround(baseY)) {
+                    this.y = baseY;
+                    this.gravity = 0;
+                }
             }
         }, 1000 / 25);
     }
 
-    isAboveGround() {
+    isAboveGround(baseY) {
         if (this instanceof ThrowableObject && !this instanceof Bottle) {
             return false;
         } else {
-            return this.y < 150;
+            return this.y < baseY;
         }
     }
 
@@ -51,7 +67,7 @@ class MovebaleObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
 
-        return timepassed < 1;
+        return timepassed < 1.25;
     }
 
     isDead() {
@@ -70,7 +86,6 @@ class MovebaleObject extends DrawableObject {
         this.y = jumpheight;
         this.gravity = this.force;
     }
-
     walkRight(speed) {
         this.x += speed;
         this.walkingSound.play();

@@ -40,7 +40,7 @@ class ThrowableObject extends MovebaleObject {
     }
 
     throw() {
-        this.applayGravity();
+        this.applayGravity(this.y);
         setInterval(() => {
             this.x += this.force;
             this.y += 40;
