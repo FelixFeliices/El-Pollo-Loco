@@ -14,7 +14,7 @@ class Endboss extends MovebaleObject {
 
     damage = 90;
 
-    chickenSound = new Audio("../audio/chicken.mp3");
+    chickenSound = new Audio("../assets/audio/chicken.mp3");
     audioVolume = 0.25;
 
     IMAGES_WALKING = [
@@ -73,7 +73,7 @@ class Endboss extends MovebaleObject {
                 }
             } else if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.toNear(this)) {
+            } else if (this.toNear()) {
                 this.playAnimation(this.IMAGES_ALERT);
                 this.speed = 0;
                 this.x -= this.speed;

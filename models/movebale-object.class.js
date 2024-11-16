@@ -71,9 +71,9 @@ class MovebaleObject extends DrawableObject {
         }
     }
 
-    toNear(mo) {
+    toNear() {
         return (
-            this.world.character.x + this.world.character.width - mo.x > -300
+            this.world.character.x + this.world.character.width - this.x > -300
         );
     }
 
