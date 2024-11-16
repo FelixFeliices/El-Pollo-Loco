@@ -79,7 +79,7 @@ class Endboss extends MovebaleObject {
                 this.x -= this.speed;
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
-                this.speed = 0.1;
+                this.speed = 0.05;
 
                 setInterval(() => {
                     if (this.x > 500) {
