@@ -8,3 +8,9 @@ canvas {
     /* background-image: url(./assets/img/5_background/layers/air.png); */
     background-color: black;
 }
+
+@font-face {
+    font-family: 'Boogaloo';
+    src: url('../assets/fonts/Boogaloo-Regular.ttf');
+
+}

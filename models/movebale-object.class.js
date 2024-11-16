@@ -1,44 +1,39 @@
 class MovebaleObject extends DrawableObject {
-    speed;
-    otherDirection = false;
     world;
+
     gravity = 0;
     force = 40;
     acceleration = 4.5;
+
+    baseY = this.y;
+
+    speed;
+    otherDirection = false;
+    hasJumped = false;
+
     energy = 100;
     damage = 0;
     lastHit = 0;
-    baseY = this.y;
-    hasJumped = false;
 
-    // applayGravity() {
-    //     setInterval(() => {
-    //         if (this.isAboveGround() || this.gravity > 0) {
-    //             this.y -= this.gravity;
-    //             this.gravity -= this.acceleration;
-    //         }
-    //     }, 1000 / 25);
-    // }
-
-    applayGravity(baseY) {
+    applayGravity() {
         setInterval(() => {
-            if (this.isAboveGround(baseY) || this.gravity > 0) {
+            if (this.isAboveGround() || this.gravity > 0) {
                 this.y -= this.gravity;
                 this.gravity -= this.acceleration;
 
-                if (!this.isAboveGround(baseY)) {
-                    this.y = baseY;
+                if (!this.isAboveGround()) {
+                    this.y = this.baseY;
                     this.gravity = 0;
                 }
             }
         }, 1000 / 25);
     }
 
-    isAboveGround(baseY) {
+    isAboveGround() {
         if (this instanceof ThrowableObject && !this instanceof Bottle) {
             return false;
         } else {
-            return this.y < baseY;
+            return this.y < this.baseY;
         }
     }
 
@@ -81,12 +76,14 @@ class MovebaleObject extends DrawableObject {
             this.world.character.x + this.world.character.width - mo.x > -300
         );
     }
-    // IF statment mit gravity
 
     jump(jumpheight) {
-        this.y = jumpheight;
-        this.gravity = this.force;
+        if (this.gravity === 0) {
+            this.y = jumpheight;
+            this.gravity = this.force;
+        }
     }
+
     walkRight(speed) {
         this.x += speed;
         this.walkingSound.play();
@@ -110,5 +107,15 @@ class MovebaleObject extends DrawableObject {
         let path = images[i];
         this.img = this.imgChache[path];
         this.currentImage++;
+    }
+
+    slowAnimation(images) {
+        if (
+            !this.lastIdleFrame ||
+            Date.now() - this.lastIdleFrame > 1000 / 10
+        ) {
+            this.playAnimation(images);
+            this.lastIdleFrame = Date.now();
+        }
     }
 }

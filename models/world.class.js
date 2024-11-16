@@ -9,6 +9,7 @@ class World {
     healthbar = new Healthbar();
     bottelbar = new Bottelbar();
     endbossbar = new EndbossBar();
+    coinbar = new Coinbar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -46,7 +47,7 @@ class World {
             if (this.character.bottleBag > 0) {
                 let bottle = new ThrowableObject(
                     this.character.x + 130,
-                    this.character.y + 150
+                    this.character.y + 30
                 );
 
                 this.bottelbar.setPercentage(this.character.bottleBag - 1);
@@ -91,6 +92,13 @@ class World {
             }
         });
 
+        this.level.coins.forEach((coin, i) => {
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(i, 1);
+                this.character.collect(coin);
+            }
+        });
+
         this.level.throwableObjects.forEach((bottle) => {
             let endboss = this.level.enemies[this.level.enemies.length - 1];
             if (
@@ -111,18 +119,33 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.level.clouds);
         this.addObjectsToMap(this.level.throwableObjects);
+        this.addObjectsToMap(this.level.coins);
+
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.healthbar);
         this.addToMap(this.bottelbar);
         this.addToMap(this.endbossbar);
+        this.addToMap(this.coinbar);
+        this.addCoinCount();
+
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(() => this.draw());
+    }
+
+    addCoinCount() {
+        this.ctx.font = "24px 'Boogaloo', sans-serif";
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText(
+            this.character.coins,
+            this.coinbar.width,
+            this.coinbar.y + 32
+        );
     }
 
     addObjectsToMap(objects) {

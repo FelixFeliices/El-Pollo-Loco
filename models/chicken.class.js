@@ -11,7 +11,7 @@ class Chicken extends MovebaleObject {
         DOWN: 2.5,
     };
 
-    chickenSound = new Audio("../audio/chicken.mp3");
+    chickenSound = new Audio("../assets/audio/chicken.mp3");
     audioVolume = 0.25;
 
     speed = 0.3 + Math.random() * 0.25;

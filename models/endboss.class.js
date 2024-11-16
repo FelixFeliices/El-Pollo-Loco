@@ -56,7 +56,7 @@ class Endboss extends MovebaleObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
-        this.applayGravity(this.y);
+        this.applayGravity();
 
         this.chickenSound.volume = this.audioVolume;
     }

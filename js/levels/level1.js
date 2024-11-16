@@ -79,5 +79,6 @@ const level1 = new Level(
             719 * 3
         ),
     ],
-    [new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle()]
+    [new Bottle(), new Bottle(), new Bottle(), new Bottle(), new Bottle()],
+    [new Coin(), new Coin(), new Coin(), new Coin(), new Coin()]
 );
