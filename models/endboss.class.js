@@ -13,7 +13,7 @@ class Endboss extends MovebaleObject {
     };
 
     damage = 90;
-
+    energy = 10;
     chickenSound = new Audio("../assets/audio/chicken.mp3");
     audioVolume = 0.25;
 
@@ -72,7 +72,10 @@ class Endboss extends MovebaleObject {
                     this.hasJumped = false;
                 }
             } else if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                setInterval(() => {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    this.y += 10;
+                }, 1000 / 20);
             } else if (this.toNear()) {
                 this.playAnimation(this.IMAGES_ALERT);
                 this.speed = 0;

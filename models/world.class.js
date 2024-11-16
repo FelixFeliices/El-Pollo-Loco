@@ -31,7 +31,6 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-            console.log(this.level.throwableObjects.length);
             this.addNewBottels();
         }, 1000 / 8);
     }
