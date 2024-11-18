@@ -6,7 +6,7 @@ class Cloud extends MovebaleObject {
     speed = 0.06;
 
     constructor() {
-        super().loadImage("../assets/img/5_background/layers/4_clouds/1.png");
+        super().loadImage("./assets/img/5_background/layers/4_clouds/1.png");
         this.moveLeft(this.speed);
     }
 }
