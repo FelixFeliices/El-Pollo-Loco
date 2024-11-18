@@ -71,22 +71,24 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                if (
-                    this.character.y +
-                        this.character.height -
-                        enemy.y -
-                        enemy.height <
-                    -30
-                ) {
-                    enemy.hit(this.character.damage, true);
-                } else {
-                    this.character.hit(enemy.damage, false);
-                    this.healthbar.setPercentage(this.character.energy);
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    if (
+                        this.character.y +
+                            this.character.height -
+                            enemy.y -
+                            enemy.height <
+                        -30
+                    ) {
+                        enemy.hit(this.character.damage);
+                    } else {
+                        this.character.hit(enemy.damage);
+                        this.healthbar.setPercentage(this.character.energy);
+                    }
                 }
-            }
-        });
+            });
+        }, 1000 / 60);
 
         this.level.throwableObjects.forEach((bottle, i) => {
             if (this.character.isColliding(bottle)) {

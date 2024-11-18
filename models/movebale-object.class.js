@@ -47,8 +47,8 @@ class MovebaleObject extends DrawableObject {
         );
     }
 
-    hit(damage, hurtPossible) {
-        if (!this.isHurt() && hurtPossible == true) {
+    hit(damage) {
+        if (!this.isHurt()) {
             this.energy -= damage;
             if (this.energy <= 0) {
                 this.energy = 0;
@@ -56,13 +56,6 @@ class MovebaleObject extends DrawableObject {
                 this.lastHit = new Date().getTime();
             }
         }
-    }
-
-    hasKilled() {
-        let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
-
-        return timepassed < 0.25;
     }
 
     isHurt() {
