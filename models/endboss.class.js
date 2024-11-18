@@ -13,7 +13,7 @@ class Endboss extends MovebaleObject {
     };
 
     damage = 90;
-    energy = 10;
+    energy = 100;
     chickenSound = new Audio("../assets/audio/chicken.mp3");
     audioVolume = 0.25;
 

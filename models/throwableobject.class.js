@@ -47,7 +47,7 @@ class ThrowableObject extends MovebaleObject {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
                 this.x -= this.force - 10;
-                this.y -= 35;
+                this.y -= 45;
             } else this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
         }, 100);
     }

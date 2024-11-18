@@ -12,14 +12,6 @@ function fullscreen() {
     canvas.requestFullscreen();
 }
 
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-    }
-});
-
 window.addEventListener("keydown", (event) => {
     if (event.keyCode === 37) {
         keyboard.LEFT = true;
@@ -32,12 +24,6 @@ window.addEventListener("keydown", (event) => {
     }
     if (event.keyCode === 68) {
         keyboard.THROW = true;
-    }
-
-    if (event.keyCode === 27) {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
     }
 });
 
@@ -53,5 +39,10 @@ window.addEventListener("keyup", (event) => {
     }
     if (event.keyCode === 68) {
         keyboard.THROW = false;
+    }
+    if (event.keyCode === 27) {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
     }
 });

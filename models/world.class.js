@@ -48,7 +48,7 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.THROW) {
-            if (this.character.bottleBag > 0) {
+            if (this.checkThrowAllowed()) {
                 let bottle = new ThrowableObject(
                     this.character.x + 130,
                     this.character.y + 30
@@ -61,24 +61,31 @@ class World {
         }
     }
 
+    checkThrowAllowed() {
+        return (
+            this.character.bottleBag > 0 &&
+            this.level.throwableObjects.every(
+                (element) => !(element instanceof ThrowableObject)
+            )
+        );
+    }
+
     checkCollisions() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    if (
-                        this.character.y +
-                            this.character.height -
-                            enemy.y -
-                            enemy.height <
-                        -30
-                    ) {
-                        enemy.hit(this.character.damage);
-                    } else {
-                        this.character.hit(enemy.damage);
-                        this.healthbar.setPercentage(this.character.energy);
-                    }
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                if (
+                    this.character.y +
+                        this.character.height -
+                        enemy.y -
+                        enemy.height <
+                    -30
+                ) {
+                    enemy.hit(this.character.damage, true);
+                } else {
+                    this.character.hit(enemy.damage, false);
+                    this.healthbar.setPercentage(this.character.energy);
                 }
-            }, 1000 / 60);
+            }
         });
 
         this.level.throwableObjects.forEach((bottle, i) => {
@@ -115,6 +122,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.throwableObjects);
         this.addObjectsToMap(this.level.coins);
         this.addToMap(this.character);
@@ -127,7 +135,6 @@ class World {
         this.addCoinCount();
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(() => this.draw());
