@@ -132,7 +132,7 @@ class Character extends MovebaleObject {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.y += 20;
                 setTimeout(() => clearInterval(animationInterval), 880);
-            } else if (this.isHurt()) {
+            } else if (this.isHurt() && !this.hasKilled) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);

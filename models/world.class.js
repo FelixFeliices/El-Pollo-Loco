@@ -82,9 +82,16 @@ class World {
                         -30
                     ) {
                         enemy.hit(this.character.damage);
+                        if (enemy.isDead()) {
+                            this.character.hasKilled = true;
+                        }
                     } else {
                         this.character.hit(enemy.damage);
                         this.healthbar.setPercentage(this.character.energy);
+
+                        if (!enemy.isDead()) {
+                            this.character.hasKilled = false;
+                        }
                     }
                 }
             });

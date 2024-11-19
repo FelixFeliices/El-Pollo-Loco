@@ -15,6 +15,8 @@ class MovebaleObject extends DrawableObject {
     damage = 0;
     lastHit = 0;
 
+    hasKilled = false;
+
     applayGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.gravity > 0) {
@@ -45,6 +47,14 @@ class MovebaleObject extends DrawableObject {
             this.y + this.offset.UP < mo.y + mo.height &&
             !this.isHurt()
         );
+    }
+
+    resetKill() {
+        if (this.isHurt) {
+            this.hasKilled = false;
+        } else {
+            this.hasKilled = true;
+        }
     }
 
     hit(damage) {
