@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/style/standart-classes.css">
 
     <script src="./models/drawableObject.class.js"></script>
     <script src="./models/movebale-object.class.js"></script>
@@ -36,10 +37,29 @@
     <script src="./js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="checkOrientation(portrait)">
     <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
-    <button onclick="fullscreen()"> Full Screen</button>
+
+    <div class="game">
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <button id="play-btn" onclick="init()" class="btn play"><img src="./assets/icons/start-button.png"
+                alt=""></button>
+        <div id="screen-btns" class="screen-btns d-none">
+            <button onclick="fullscreen()" class="btn screen-size"> <img src="./assets/icons/fullscreen.png"
+                    alt=""></button>
+            <button onclick="closeFullscreen()" class="btn screen-size"> <img src="./assets/icons/exit-fullscreen.png"
+                    alt=""></button>
+        </div>
+
+    </div>
 </body>
+
+<div id="turn-msg-overlay" class="overlay turn-msg hide">
+    <div class="bg-circle">
+        <img class="turn-img" src="./assets/icons/turn-device.png" alt="">
+    </div>
+
+    <span>Please turn your Device!</span>
+</div>
 
 </html>

@@ -2,14 +2,39 @@ let canvas;
 let ctx;
 let world;
 let keyboard = new Keyboard();
+let portrait = window.matchMedia("(orientation: portrait)").matches;
+let orientationQuery = window.matchMedia("(orientation: portrait)");
 
-function init() {
-    canvas = document.getElementById("canvas");
-    world = new World(canvas, keyboard);
+orientationQuery.addEventListener("change", (e) => {
+    checkOrientation(e.matches);
+});
+
+function checkOrientation(isPortrait) {
+    portrait = isPortrait;
+
+    if (portrait && window.innerWidth < 1024) {
+        document.getElementById("turn-msg-overlay").classList.remove("hide");
+    } else {
+        document.getElementById("turn-msg-overlay").classList.add("hide");
+    }
 }
 
 function fullscreen() {
     canvas.requestFullscreen();
+    canvas.style.setProperty("background-image", "unset");
+}
+
+function closeFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    }
+}
+
+function init() {
+    canvas = document.getElementById("canvas");
+    world = new World(canvas, keyboard);
+    document.getElementById("play-btn").classList.add("d-none");
+    document.getElementById("screen-btns").classList.remove("d-none");
 }
 
 window.addEventListener("keydown", (event) => {
