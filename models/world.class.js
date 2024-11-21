@@ -10,6 +10,7 @@ class World {
     bottelbar = new Bottelbar();
     endbossbar = new EndbossBar();
     coinbar = new Coinbar();
+    msg = new GameOverMsg();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -32,14 +33,30 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.addNewBottels();
+            this.handleGameOverStatus();
         }, 1000 / 8);
     }
 
+    handleGameOverStatus() {
+        if (this.checkGameOver()) {
+            this.msg.y = 0;
+            document.getElementById("play-btn").classList.remove("d-none");
+            setTimeout(() => {
+                this.clearAllIntervals();
+            }, 760);
+        }
+    }
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    }
+
+    checkGameOver() {
+        return this.character.isDead();
+    }
+
     addNewBottels() {
-        if (
-            this.level.throwableObjects.length === 0 &&
-            this.character.bottleBag === 0
-        ) {
+        if (this.level.throwableObjects.length === 0 && this.character.bottleBag === 0) {
             for (let i = 0; i <= 5; i++) {
                 this.level.throwableObjects.push(new Bottle());
             }
@@ -49,10 +66,7 @@ class World {
     checkThrowObjects() {
         if (this.keyboard.THROW) {
             if (this.checkThrowAllowed()) {
-                let bottle = new ThrowableObject(
-                    this.character.x + 130,
-                    this.character.y + 30
-                );
+                let bottle = new ThrowableObject(this.character.x + 130, this.character.y + 30);
                 this.bottelbar.setPercentage(this.character.bottleBag - 1);
                 this.character.bottleBag--;
                 this.level.throwableObjects.push(bottle);
@@ -62,25 +76,14 @@ class World {
     }
 
     checkThrowAllowed() {
-        return (
-            this.character.bottleBag > 0 &&
-            this.level.throwableObjects.every(
-                (element) => !(element instanceof ThrowableObject)
-            )
-        );
+        return this.character.bottleBag > 0 && this.level.throwableObjects.every((element) => !(element instanceof ThrowableObject));
     }
 
     checkCollisions() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    if (
-                        this.character.y +
-                            this.character.height -
-                            enemy.y -
-                            enemy.height <
-                        -30
-                    ) {
+                    if (this.character.y + this.character.height - enemy.y - enemy.height < -30) {
                         enemy.hit(this.character.damage);
                         if (enemy.isDead()) {
                             this.character.hasKilled = true;
@@ -114,10 +117,7 @@ class World {
 
         this.level.throwableObjects.forEach((bottle) => {
             let endboss = this.level.enemies[this.level.enemies.length - 1];
-            if (
-                bottle instanceof ThrowableObject &&
-                endboss.isColliding(bottle)
-            ) {
+            if (bottle instanceof ThrowableObject && endboss.isColliding(bottle)) {
                 bottle.hit(bottle.damage);
                 endboss.hit(bottle.damage);
                 this.endbossbar.setPercentage(endboss.energy);
@@ -141,6 +141,8 @@ class World {
         this.addToMap(this.bottelbar);
         this.addToMap(this.endbossbar);
         this.addToMap(this.coinbar);
+        this.addToMap(this.coinbar);
+        this.addToMap(this.msg);
         this.addCoinCount();
         this.ctx.translate(this.camera_x, 0);
 
@@ -152,11 +154,7 @@ class World {
     addCoinCount() {
         this.ctx.font = "24px 'Boogaloo', sans-serif";
         this.ctx.fillStyle = "white";
-        this.ctx.fillText(
-            this.character.coins,
-            this.coinbar.width,
-            this.coinbar.y + 32
-        );
+        this.ctx.fillText(this.character.coins, this.coinbar.width, this.coinbar.y + 32);
     }
 
     addObjectsToMap(objects) {
@@ -192,16 +190,14 @@ class World {
         setInterval(() => {
             if (object.y > 380) {
                 object.hit(object.damage);
-                this.level.throwableObjects =
-                    this.level.throwableObjects.filter((obj) => obj !== object);
+                this.level.throwableObjects = this.level.throwableObjects.filter((obj) => obj !== object);
             }
         }, 1000 / 60);
 
         setInterval(() => {
             if (object.isDead()) {
                 object.hit(object.damage);
-                this.level.throwableObjects =
-                    this.level.throwableObjects.filter((obj) => obj !== object);
+                this.level.throwableObjects = this.level.throwableObjects.filter((obj) => obj !== object);
             }
         }, 1500);
     }

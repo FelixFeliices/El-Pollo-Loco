@@ -99,10 +99,7 @@ class Character extends MovebaleObject {
             this.walkingSound.playbackRate = 1.5;
             this.walkingSound.pause();
             if (!this.isDead()) {
-                if (
-                    this.world.keyboard.RIGHT &&
-                    this.x < this.world.level.levelEndX
-                ) {
+                if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
                     this.walkRight(this.speed);
                     this.otherDirection = false;
                     this.lastMove = new Date().getTime();
@@ -127,20 +124,15 @@ class Character extends MovebaleObject {
             }
         }, 1000 / 60);
 
-        let animationInterval = setInterval(() => {
+        setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.y += 20;
-                setTimeout(() => clearInterval(animationInterval), 880);
             } else if (this.isHurt() && !this.hasKilled) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-            } else if (
-                (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
-                !this.isHurt() &&
-                !this.isDead()
-            ) {
+            } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else if (this.getTired()) {
                 this.slowAnimation(this.IMAGES_LONG_IDLE);

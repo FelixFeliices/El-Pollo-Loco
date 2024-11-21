@@ -3,16 +3,58 @@ let ctx;
 let world;
 let keyboard = new Keyboard();
 let portrait = window.matchMedia("(orientation: portrait)").matches;
-let orientationQuery = window.matchMedia("(orientation: portrait)");
+let game;
+let gameActive = false;
 
-orientationQuery.addEventListener("change", (e) => {
-    checkOrientation(e.matches);
-});
+checkFullScreen();
+
+function init() {
+    canvas = document.getElementById("canvas");
+    game = document.getElementById("game");
+
+    checkOrientation(portrait);
+    checkFullScreen();
+
+    window.addEventListener("resize", () => {
+        portrait = window.innerHeight > window.innerWidth;
+        checkOrientation(portrait);
+    });
+}
+
+function gameInit() {
+    document.getElementById("play-btn").classList.add("d-none");
+    document.getElementById("game-overlay").classList.add("d-none");
+    document.getElementById("canvas").classList.remove("d-none");
+    setLevel();
+    world = new World(canvas, keyboard);
+    gameActive = true;
+}
+
+function checkFullScreen() {
+    setInterval(() => {
+        if (document.fullscreenElement) {
+            document.getElementById("open-fullscreen-btn").classList.add("d-none");
+            document.getElementById("close-fullscreen-btn").classList.remove("d-none");
+            document.getElementById("play-btn").style.top = "280px";
+            document.getElementById("play-btn").style.scale = "2";
+            if (!gameActive) {
+                document.getElementById("canvas").classList.add("d-none");
+            } else {
+                document.getElementById("canvas").classList.remove("d-none");
+            }
+        } else {
+            document.getElementById("open-fullscreen-btn").classList.remove("d-none");
+            document.getElementById("close-fullscreen-btn").classList.add("d-none");
+            document.getElementById("play-btn").style.top = "16px";
+            document.getElementById("play-btn").style.scale = "1";
+        }
+    }, 1000 / 20);
+}
 
 function checkOrientation(isPortrait) {
     portrait = isPortrait;
 
-    if (portrait && window.innerWidth < 1024) {
+    if (portrait) {
         document.getElementById("turn-msg-overlay").classList.remove("hide");
     } else {
         document.getElementById("turn-msg-overlay").classList.add("hide");
@@ -20,21 +62,13 @@ function checkOrientation(isPortrait) {
 }
 
 function fullscreen() {
-    canvas.requestFullscreen();
-    canvas.style.setProperty("background-image", "unset");
+    game.requestFullscreen();
 }
 
 function closeFullscreen() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
     }
-}
-
-function init() {
-    canvas = document.getElementById("canvas");
-    world = new World(canvas, keyboard);
-    document.getElementById("play-btn").classList.add("d-none");
-    document.getElementById("screen-btns").classList.remove("d-none");
 }
 
 window.addEventListener("keydown", (event) => {

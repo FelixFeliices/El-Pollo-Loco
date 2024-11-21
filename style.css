@@ -3,6 +3,11 @@
     src: url('./assets/fonts/Boogaloo-Regular.ttf');
 }
 
+:root {
+    --game-width: 1024px;
+    --game-height: 480px;
+}
+
 html,
 body {
     height: 100%;
@@ -20,19 +25,30 @@ body {
 }
 
 canvas {
-    background-image: url(./assets/img/9_intro_outro_screens/start/startscreen_1.png);
-    background-position: center;
-    background-size: cover;
+
     background-color: black;
     width: 100%;
+    height: 100%;
     display: block;
+    border-radius: 8px;
+
+}
+
+.game-overlay {
+    position: absolute;
+    max-width: var(--game-width);
+    max-height: 480px;
+    min-width: 100%;
+    min-height: 100%;
     border-radius: 8px;
 }
 
 .game {
+    display: block;
     position: relative;
+    max-width: var(--game-width);
     width: 100%;
-    max-width: 1024px;
+    height: 580px;
 }
 
 .play {
@@ -47,8 +63,8 @@ canvas {
 
 .screen-btns {
     position: absolute;
-    right: 0;
-    top: 90%;
+    right: 8px;
+    bottom: 8px;
 }
 
 .screen-size img {
@@ -83,6 +99,7 @@ canvas {
 }
 
 @media only screen and (max-height: 480px) {
+
     canvas {
         height: 100vh;
     }

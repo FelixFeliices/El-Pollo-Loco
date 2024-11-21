@@ -5,7 +5,5 @@ class Coinbar extends StatusBar {
 
     constructor() {
         super().loadImage("./assets/img/7_statusbars/3_icons/icon_coin.png");
-
-        // this.setPercentage(0);
     }
 }
