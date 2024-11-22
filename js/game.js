@@ -11,9 +11,12 @@ checkFullScreen();
 function init() {
     canvas = document.getElementById("canvas");
     game = document.getElementById("game");
-
     checkOrientation(portrait);
     checkFullScreen();
+
+    if (isMobile()) {
+        document.querySelector("h1").classList.add("d-none");
+    }
 
     window.addEventListener("resize", () => {
         portrait = window.innerHeight > window.innerWidth;
@@ -21,10 +24,23 @@ function init() {
     });
 }
 
+function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
+}
+
+function checkMobileMode() {
+    if (isMobile()) {
+        document.getElementById("mobile-action-btns").classList.remove("d-none");
+        document.getElementById("screen-btns").classList.add("d-none");
+    }
+}
+
 function gameInit() {
     document.getElementById("play-btn").classList.add("d-none");
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
+    checkMobileMode();
     setLevel();
     world = new World(canvas, keyboard);
     gameActive = true;
@@ -105,3 +121,35 @@ window.addEventListener("keyup", (event) => {
         }
     }
 });
+
+function startUserAction(userAction) {
+    document.getElementById(userAction + "-btn").style.scale = "1.1";
+    if (userAction == "left") {
+        keyboard.LEFT = true;
+    }
+    if (userAction == "right") {
+        keyboard.RIGHT = true;
+    }
+    if (userAction == "jump") {
+        keyboard.UP = true;
+    }
+    if (userAction == "throw") {
+        keyboard.TROW = true;
+    }
+}
+
+function endUserAction(userAction) {
+    document.getElementById(userAction + "-btn").style.scale = "1";
+    if (userAction == "left") {
+        keyboard.LEFT = false;
+    }
+    if (userAction == "right") {
+        keyboard.RIGHT = false;
+    }
+    if (userAction == "jump") {
+        keyboard.UP = false;
+    }
+    if (userAction == "throw") {
+        keyboard.TROW = false;
+    }
+}

@@ -10,6 +10,7 @@
 button {
     border: unset;
     background: unset;
+
 }
 
 button:hover {
@@ -17,8 +18,18 @@ button:hover {
     cursor: pointer;
 }
 
+
+
 .d-none {
-    display: none;
+    display: none !important;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-space-between {
+    justify-content: space-between;
 }
 
 .hide {

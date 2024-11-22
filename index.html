@@ -58,6 +58,27 @@
                     src="./assets/icons/exit-fullscreen.png" alt=""></button>
         </div>
 
+        <div id="mobile-action-btns" class="d-flex justify-space-between mobile-action-btns d-none">
+            <div>
+                <button ontouchstart="startUserAction('left')" ontouchend="endUserAction('left')" id="left-btn">
+                    <img class="btn mobile-action-btn" src="./assets/icons/arrow-left.png" alt="">
+                </button>
+
+                <button ontouchstart="startUserAction('right')" ontouchend="endUserAction('right')" id="right-btn">
+                    <img class="btn mobile-action-btn" src="./assets/icons/arrow-right.png" alt="">
+                </button>
+            </div>
+
+            <div>
+                <button ontouchstart="startUserAction('jump')" ontouchend="endUserAction('jump')" id="jump-btn">
+                    <img class="btn mobile-action-btn" src="./assets/icons/arrow-up.png" alt="">
+                </button>
+
+                <button ontouchstart="startUserAction('throw')" ontouchend="endUserAction('throw')" id="throw-btn">
+                    <img class="btn mobile-action-btn" src="./assets/icons/bottle.png" alt="">
+                </button>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -65,8 +86,9 @@
     <div class="bg-circle">
         <img class="turn-img" src="./assets/icons/turn-device.png" alt="">
     </div>
-
     <span>Please turn your Device!</span>
 </div>
+
+
 
 </html>

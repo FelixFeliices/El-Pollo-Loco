@@ -16,9 +16,24 @@ class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.startGame();
+    }
+
+    startGame() {
         this.draw();
         this.setWorld();
         this.run();
+    }
+
+    setGame() {
+        this.character = new Character();
+        this.level = level1;
+
+        this.healthbar = new Healthbar();
+        this.bottelbar = new Bottelbar();
+        this.endbossbar = new EndbossBar();
+        this.coinbar = new Coinbar();
+        this.msg = new GameOverMsg();
     }
 
     setWorld() {
@@ -37,22 +52,42 @@ class World {
         }, 1000 / 8);
     }
 
+    checkGameOver() {
+        return this.character.isDead();
+    }
+
     handleGameOverStatus() {
         if (this.checkGameOver()) {
             this.msg.y = 0;
-            document.getElementById("play-btn").classList.remove("d-none");
+            let playButton = document.getElementById("play-btn");
+            playButton.classList.remove("d-none");
+            playButton.onclick = () => this.resetWorld();
             setTimeout(() => {
                 this.clearAllIntervals();
             }, 760);
         }
     }
 
-    clearAllIntervals() {
-        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    resetWorld() {
+        document.getElementById("play-btn").classList.add("d-none");
+        this.camera_x = 0;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.setGame();
+        this.setWorld();
+
+        this.level.enemies.forEach((enemy) => {
+            if (typeof enemy.animate === "function") {
+                enemy.animate();
+            }
+        });
+
+        this.startGame();
     }
 
-    checkGameOver() {
-        return this.character.isDead();
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+        cancelAnimationFrame(window.animationFrameId);
     }
 
     addNewBottels() {
@@ -127,28 +162,31 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
+        this.addAllElements();
+        this.ctx.translate(-this.camera_x, 0);
+        this.drawStatusBars();
+        this.addToMap(this.msg);
+        this.ctx.translate(this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0);
+        requestAnimationFrame(() => this.draw());
+    }
+
+    addAllElements() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.throwableObjects);
         this.addObjectsToMap(this.level.coins);
         this.addToMap(this.character);
+    }
 
-        this.ctx.translate(-this.camera_x, 0);
+    drawStatusBars() {
         this.addToMap(this.healthbar);
         this.addToMap(this.bottelbar);
         this.addToMap(this.endbossbar);
         this.addToMap(this.coinbar);
-        this.addToMap(this.coinbar);
-        this.addToMap(this.msg);
         this.addCoinCount();
-        this.ctx.translate(this.camera_x, 0);
-
-        this.ctx.translate(-this.camera_x, 0);
-
-        requestAnimationFrame(() => this.draw());
     }
 
     addCoinCount() {
@@ -193,7 +231,6 @@ class World {
                 this.level.throwableObjects = this.level.throwableObjects.filter((obj) => obj !== object);
             }
         }, 1000 / 60);
-
         setInterval(() => {
             if (object.isDead()) {
                 object.hit(object.damage);
