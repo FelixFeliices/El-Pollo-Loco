@@ -5,6 +5,19 @@
     margin: 0;
 }
 
+:root {
+    --game-width: 1024px;
+    --game-height: 480px;
+    --yellow: rgb(255, 205, 23)
+}
+
+h1 {
+    position: absolute;
+    top: 16px;
+    font-family: Boogaloo;
+    color: var(--yellow);
+    font-size: 88px;
+}
 
 
 button {

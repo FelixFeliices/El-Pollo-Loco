@@ -3,7 +3,7 @@ class ThrowableObject extends MovebaleObject {
     width = 80;
     force = 35;
     gravity = 60;
-    damage = 10;
+    damage = 30;
     energy = this.damage;
 
     IMAGES_BOTTLE_ROTATE = [

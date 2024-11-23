@@ -1,5 +1,6 @@
 class Chicken extends MovebaleObject {
-    x = 400 + Math.random() * 1800 - Math.random() * 50;
+    x = 400 + Math.random() * (2000 - 400);
+
     y = 370;
     width = 60;
     height = 60;

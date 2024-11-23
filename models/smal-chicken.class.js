@@ -1,10 +1,11 @@
 class SmallChicken extends MovebaleObject {
-    x = 400 + Math.random() * 2000 - Math.random() * 50;
+    x = 1000 + Math.random() * (2000 - 400);
+
     y = 370;
     width = 60;
     height = 60;
 
-    speed = 0.3 + Math.random() * 0.25;
+    speed = 0.2 + Math.random() * 0.25;
     damage = 5;
 
     chickenSound = new Audio("./assets/audio/chicken.mp3");

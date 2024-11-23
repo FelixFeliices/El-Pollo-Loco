@@ -10,7 +10,7 @@ function init() {
     canvas = document.getElementById("canvas");
     game = document.getElementById("game");
     checkOrientation(portrait);
-    checkFullScreen();
+    checkGameActive();
     checkHideHeadline();
 
     window.addEventListener("resize", () => {
@@ -48,7 +48,7 @@ function gameInit() {
     gameActive = true;
 }
 
-function checkFullScreen() {
+function checkGameActive() {
     setInterval(() => {
         if (!gameActive) {
             document.getElementById("canvas").classList.add("d-none");
