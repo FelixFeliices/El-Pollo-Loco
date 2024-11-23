@@ -121,29 +121,31 @@ class World {
 
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                if (
-                    this.character.y +
-                        this.character.height -
-                        enemy.y -
-                        enemy.height <
-                        -30 &&
-                    !(enemy instanceof Endboss)
-                ) {
-                    enemy.hit(this.character.damage);
-                    if (enemy.isDead()) {
-                        this.character.hasKilled = true;
-                    }
-                } else {
-                    this.character.hit(enemy.damage);
-                    this.healthbar.setPercentage(this.character.energy);
-
-                    if (!enemy.isDead()) {
-                        this.character.hasKilled = false;
-                    }
-                }
-            }
+            if (this.character.isColliding(enemy)) this.handleCollision(enemy);
         });
+    }
+
+    handleCollision(enemy) {
+        if (this.isFallingOnEnemy(enemy)) this.handleFallingOnEnemy(enemy);
+        else this.handleDamageFromEnemy(enemy);
+    }
+
+    isFallingOnEnemy(enemy) {
+        return (
+            this.character.y + this.character.height - enemy.y - enemy.height <
+                -30 && !(enemy instanceof Endboss)
+        );
+    }
+
+    handleFallingOnEnemy(enemy) {
+        enemy.hit(this.character.damage);
+        if (enemy.isDead()) this.character.hasKilled = true;
+    }
+
+    handleDamageFromEnemy(enemy) {
+        this.character.hit(enemy.damage);
+        this.healthbar.setPercentage(this.character.energy);
+        if (!enemy.isDead()) this.character.hasKilled = false;
     }
 
     checkThrowableObjectCollisions() {
@@ -229,7 +231,7 @@ class World {
                 this.flipImage(mo);
             }
             mo.draw(this.ctx);
-            mo.drawRectangle(this.ctx);
+            // mo.drawRectangle(this.ctx);
             if (mo.otherDirection) {
                 this.resetflipImage(mo);
             }

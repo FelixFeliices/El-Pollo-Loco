@@ -56,27 +56,29 @@
         <div id="screen-btns" class="screen-btns">
             <button id="open-fullscreen-btn" onclick="fullscreen()" class="btn screen-size"> <img
                     src="./assets/icons/fullscreen.png" alt=""></button>
-            <button id="close-fullscreen-btn" onclick="closeFullscreen()" class="btn screen-size"> <img
+            <button id="close-fullscreen-btn" onclick="closeFullscreen()" class="btn screen-size d-none"> <img
                     src="./assets/icons/exit-fullscreen.png" alt=""></button>
         </div>
 
         <div id="mobile-action-btns" class="d-flex justify-space-between mobile-action-btns d-none">
             <div>
-                <button ontouchstart="startUserAction('left')" ontouchend="endUserAction('left')" id="left-btn">
+                <button ontouchstart="startUserAction('left',event)" ontouchend="endUserAction('left')" id="left-btn">
                     <img class="btn mobile-action-btn" src="./assets/icons/arrow-left.png" alt="">
                 </button>
 
-                <button ontouchstart="startUserAction('right')" ontouchend="endUserAction('right')" id="right-btn">
+                <button ontouchstart="startUserAction('right',event)" ontouchend="endUserAction('right')"
+                    id="right-btn">
                     <img class="btn mobile-action-btn" src="./assets/icons/arrow-right.png" alt="">
                 </button>
             </div>
 
             <div>
-                <button ontouchstart="startUserAction('jump')" ontouchend="endUserAction('jump')" id="jump-btn">
+                <button ontouchstart="startUserAction('jump',event)" ontouchend="endUserAction('jump')" id="jump-btn">
                     <img class="btn mobile-action-btn" src="./assets/icons/arrow-up.png" alt="">
                 </button>
 
-                <button ontouchstart="startUserAction('throw')" ontouchend="endUserAction('throw')" id="throw-btn">
+                <button ontouchstart="startUserAction('throw',event)" ontouchend="endUserAction('throw')"
+                    id="throw-btn">
                     <img class="btn mobile-action-btn" src="./assets/icons/bottle.png" alt="">
                 </button>
             </div>

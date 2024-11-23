@@ -6,17 +6,12 @@ let portrait = window.matchMedia("(orientation: portrait)").matches;
 let game;
 let gameActive = false;
 
-checkFullScreen();
-
 function init() {
     canvas = document.getElementById("canvas");
     game = document.getElementById("game");
     checkOrientation(portrait);
     checkFullScreen();
-
-    if (isMobile()) {
-        document.querySelector("h1").classList.add("d-none");
-    }
+    checkHideHeadline();
 
     window.addEventListener("resize", () => {
         portrait = window.innerHeight > window.innerWidth;
@@ -25,18 +20,25 @@ function init() {
 }
 
 function isMobile() {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    const regex =
+        /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
     return regex.test(navigator.userAgent);
+}
+
+function checkHideHeadline() {
+    if (isMobile()) document.querySelector("h1").classList.add("d-none");
 }
 
 function checkMobileMode() {
     if (isMobile()) {
-        document.getElementById("mobile-action-btns").classList.remove("d-none");
+        document
+            .getElementById("mobile-action-btns")
+            .classList.remove("d-none");
         document.getElementById("screen-btns").classList.add("d-none");
     }
 }
 
-async function gameInit() {
+function gameInit() {
     document.getElementById("play-btn").classList.add("d-none");
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
@@ -48,21 +50,10 @@ async function gameInit() {
 
 function checkFullScreen() {
     setInterval(() => {
-        if (document.fullscreenElement) {
-            document.getElementById("open-fullscreen-btn").classList.add("d-none");
-            document.getElementById("close-fullscreen-btn").classList.remove("d-none");
-            document.getElementById("play-btn").style.top = "280px";
-            document.getElementById("play-btn").style.scale = "2";
-            if (!gameActive) {
-                document.getElementById("canvas").classList.add("d-none");
-            } else {
-                document.getElementById("canvas").classList.remove("d-none");
-            }
+        if (!gameActive) {
+            document.getElementById("canvas").classList.add("d-none");
         } else {
-            document.getElementById("open-fullscreen-btn").classList.remove("d-none");
-            document.getElementById("close-fullscreen-btn").classList.add("d-none");
-            document.getElementById("play-btn").style.top = "16px";
-            document.getElementById("play-btn").style.scale = "1";
+            document.getElementById("canvas").classList.remove("d-none");
         }
     }, 1000 / 20);
 }
@@ -122,7 +113,13 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
-function startUserAction(userAction) {
+function startUserAction(userAction, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    console.log(event);
+
     document.getElementById(userAction + "-btn").style.scale = "1.1";
     if (userAction == "left") {
         keyboard.LEFT = true;
