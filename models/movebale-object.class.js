@@ -39,12 +39,22 @@ class MovebaleObject extends DrawableObject {
         }
     }
 
+    // isColliding(mo) {
+    //     return (
+    //         this.x - this.offset.LEFT + this.width > mo.x &&
+    //         this.y + this.height + this.offset.UP > mo.y &&
+    //         this.x - this.offset.LEFT < mo.x + mo.width &&
+    //         this.y + this.offset.UP < mo.y + mo.height &&
+    //         !this.isHurt()
+    //     );
+    // }
+
     isColliding(mo) {
         return (
-            this.x - this.offset.LEFT + this.width > mo.x &&
-            this.y + this.height + this.offset.UP > mo.y &&
-            this.x - this.offset.LEFT < mo.x + mo.width &&
-            this.y + this.offset.UP < mo.y + mo.height &&
+            this.x + this.width - this.offset.RIGHT > mo.x + mo.offset.LEFT &&
+            this.y + this.height + this.offset.DOWN > mo.y + mo.offset.UP &&
+            this.x + this.offset.LEFT < mo.x + mo.width - mo.offset.RIGHT &&
+            this.y + this.offset.UP < mo.y + mo.height - mo.offset.DOWN &&
             !this.isHurt()
         );
     }
@@ -82,9 +92,7 @@ class MovebaleObject extends DrawableObject {
     }
 
     toNear() {
-        return (
-            this.world.character.x + this.world.character.width - this.x > -300
-        );
+        return this.world.character.x + this.world.character.width - this.x > -300;
     }
 
     jump(jumpheight) {
@@ -120,10 +128,7 @@ class MovebaleObject extends DrawableObject {
     }
 
     slowAnimation(images) {
-        if (
-            !this.lastIdleFrame ||
-            Date.now() - this.lastIdleFrame > 1000 / 10
-        ) {
+        if (!this.lastIdleFrame || Date.now() - this.lastIdleFrame > 1000 / 10) {
             this.playAnimation(images);
             this.lastIdleFrame = Date.now();
         }

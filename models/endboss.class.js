@@ -1,12 +1,12 @@
 class Endboss extends MovebaleObject {
-    x = 1700;
+    x = 3650;
     y = 140;
     baseY = this.y;
     width = 300;
     height = 300;
 
     offset = {
-        LEFT: 2.5,
+        LEFT: 60,
         RIGHT: 2.5,
         UP: 35,
         DOWN: 2.5,
@@ -64,34 +64,48 @@ class Endboss extends MovebaleObject {
     animate() {
         setInterval(() => {
             if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-                if (!this.hasJumped) {
-                    this.jump(140);
-                    this.hasJumped = true;
-                } else if (this.y >= this.baseY) {
-                    this.hasJumped = false;
-                }
+                this.handleHurt();
             } else if (this.isDead()) {
-                setInterval(() => {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    this.y += 10;
-                }, 1000 / 20);
-            }
-            // else if (this.toNear()) {
-            //     this.playAnimation(this.IMAGES_ALERT);
-            //     this.speed = 0;
-            //     this.x -= this.speed;
-            // }
-            else {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.speed = 0.05;
-
-                setInterval(() => {
-                    if (this.x > 500) {
-                        this.x -= this.speed;
-                    }
-                }, 1000 / 60);
+                this.handleDead();
+            } else if (this.toNear() && this.energy > 75) {
+                this.handleAlert();
+            } else {
+                this.handleWalking();
             }
         }, 1000 / 2);
+    }
+
+    handleHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        if (!this.hasJumped) {
+            this.jump(140);
+            this.hasJumped = true;
+        } else if (this.y >= this.baseY) {
+            this.hasJumped = false;
+        }
+    }
+
+    handleDead() {
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_DEAD);
+            this.y += 10;
+        }, 1000 / 20);
+    }
+
+    handleAlert() {
+        this.playAnimation(this.IMAGES_ALERT);
+        this.speed = 0;
+        this.x -= this.speed;
+    }
+
+    handleWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.speed = 0.05;
+
+        setInterval(() => {
+            if (this.x > 500) {
+                this.x -= this.speed;
+            }
+        }, 1000 / 60);
     }
 }

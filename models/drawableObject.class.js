@@ -31,13 +31,15 @@ class DrawableObject {
     }
 
     drawRectangle(ctx) {
-        ctx.beginPath();
-        ctx.rect(
-            this.x + this.offset.LEFT,
-            this.y + this.offset.UP - this.offset.DOWN,
-            this.width - this.offset.LEFT - this.offset.RIGHT,
-            this.height - this.offset.UP
-        );
-        ctx.stroke();
+        if (this instanceof Character || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.rect(
+                this.x + this.offset.LEFT,
+                this.y + this.offset.UP - this.offset.DOWN,
+                this.width - this.offset.LEFT - this.offset.RIGHT,
+                this.height - this.offset.UP
+            );
+            ctx.stroke();
+        }
     }
 }

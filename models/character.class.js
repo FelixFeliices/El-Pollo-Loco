@@ -11,9 +11,9 @@ class Character extends MovebaleObject {
     coins = 0;
     damage = 100;
     offset = {
-        LEFT: 20,
-        RIGHT: 20,
-        UP: 5,
+        LEFT: 50,
+        RIGHT: 50,
+        UP: 140,
         DOWN: 5,
     };
 

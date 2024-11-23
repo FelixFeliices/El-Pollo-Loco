@@ -11,11 +11,13 @@ class World {
     endbossbar = new EndbossBar();
     coinbar = new Coinbar();
     msg = new GameOverMsg();
+    winMsg = new WinMsg();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+
         this.startGame();
     }
 
@@ -23,17 +25,6 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-    }
-
-    setGame() {
-        this.character = new Character();
-        this.level = level1;
-
-        this.healthbar = new Healthbar();
-        this.bottelbar = new Bottelbar();
-        this.endbossbar = new EndbossBar();
-        this.coinbar = new Coinbar();
-        this.msg = new GameOverMsg();
     }
 
     setWorld() {
@@ -48,41 +39,33 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.addNewBottels();
-            this.handleGameOverStatus();
+            this.handleGameStatus();
         }, 1000 / 8);
+    }
+
+    checkWin() {
+        return this.level.enemies.some((element) => element instanceof Endboss && element.isDead());
     }
 
     checkGameOver() {
         return this.character.isDead();
     }
 
-    handleGameOverStatus() {
+    handleGameStatus() {
         if (this.checkGameOver()) {
             this.msg.y = 0;
-            let playButton = document.getElementById("play-btn");
-            playButton.classList.remove("d-none");
-            playButton.onclick = () => this.resetWorld();
-            setTimeout(() => {
-                this.clearAllIntervals();
-            }, 760);
+            this.stopGame(760);
+        } else if (this.checkWin()) {
+            this.winMsg.y = 0;
+            this.stopGame(1160);
         }
     }
 
-    resetWorld() {
-        document.getElementById("play-btn").classList.add("d-none");
-        this.camera_x = 0;
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        this.setGame();
-        this.setWorld();
-
-        this.level.enemies.forEach((enemy) => {
-            if (typeof enemy.animate === "function") {
-                enemy.animate();
-            }
-        });
-
-        this.startGame();
+    stopGame(time) {
+        setTimeout(() => {
+            this.clearAllIntervals();
+            document.getElementById("play-btn").classList.remove("d-none");
+        }, time);
     }
 
     clearAllIntervals() {
@@ -118,7 +101,7 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    if (this.character.y + this.character.height - enemy.y - enemy.height < -30) {
+                    if (this.character.y + this.character.height - enemy.y - enemy.height < -30 && !(enemy instanceof Endboss)) {
                         enemy.hit(this.character.damage);
                         if (enemy.isDead()) {
                             this.character.hasKilled = true;
@@ -167,6 +150,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.drawStatusBars();
         this.addToMap(this.msg);
+        this.addToMap(this.winMsg);
         this.ctx.translate(this.camera_x, 0);
         this.ctx.translate(-this.camera_x, 0);
         requestAnimationFrame(() => this.draw());
@@ -200,16 +184,16 @@ class World {
     }
 
     addToMap(mo) {
-        if (mo.otherDirection) {
-            this.flipImage(mo);
-        }
-
-        mo.draw(this.ctx);
-        // mo.drawRectangle(this.ctx);
-
-        if (mo.otherDirection) {
-            this.resetflipImage(mo);
-        }
+        if (mo) {
+            if (mo.otherDirection) {
+                this.flipImage(mo);
+            }
+            mo.draw(this.ctx);
+            mo.drawRectangle(this.ctx);
+            if (mo.otherDirection) {
+                this.resetflipImage(mo);
+            }
+        } else return;
     }
 
     flipImage(mo) {

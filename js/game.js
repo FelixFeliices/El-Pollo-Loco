@@ -36,7 +36,7 @@ function checkMobileMode() {
     }
 }
 
-function gameInit() {
+async function gameInit() {
     document.getElementById("play-btn").classList.add("d-none");
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");

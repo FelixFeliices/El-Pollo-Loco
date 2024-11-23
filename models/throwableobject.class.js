@@ -6,19 +6,14 @@ class ThrowableObject extends MovebaleObject {
     gravity = 60;
     damage = 10;
     energy = this.damage;
-    broken;
 
-    IMAGES_BOTTLE = [
-        "./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
-        "./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
-    ];
-    IMAGESBOTTLE_ROTATE = [
+    IMAGES_BOTTLE_ROTATE = [
         "./assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
         "./assets/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
         "./assets/img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
         "./assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
     ];
-    IMAGESBOTTLE_SPLASH = [
+    IMAGES_BOTTLE_SPLASH = [
         "./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
         "./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
         "./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
