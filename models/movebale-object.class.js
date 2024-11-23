@@ -32,22 +32,10 @@ class MovebaleObject extends DrawableObject {
     }
 
     isAboveGround() {
-        if (this instanceof ThrowableObject && !this instanceof Bottle) {
+        if (this instanceof ThrowableObject && !this instanceof Bottle)
             return false;
-        } else {
-            return this.y < this.baseY;
-        }
+        else return this.y < this.baseY;
     }
-
-    // isColliding(mo) {
-    //     return (
-    //         this.x - this.offset.LEFT + this.width > mo.x &&
-    //         this.y + this.height + this.offset.UP > mo.y &&
-    //         this.x - this.offset.LEFT < mo.x + mo.width &&
-    //         this.y + this.offset.UP < mo.y + mo.height &&
-    //         !this.isHurt()
-    //     );
-    // }
 
     isColliding(mo) {
         return (
@@ -57,14 +45,6 @@ class MovebaleObject extends DrawableObject {
             this.y + this.offset.UP < mo.y + mo.height - mo.offset.DOWN &&
             !this.isHurt()
         );
-    }
-
-    resetKill() {
-        if (this.isHurt) {
-            this.hasKilled = false;
-        } else {
-            this.hasKilled = true;
-        }
     }
 
     hit(damage) {
@@ -92,7 +72,9 @@ class MovebaleObject extends DrawableObject {
     }
 
     toNear() {
-        return this.world.character.x + this.world.character.width - this.x > -300;
+        return (
+            this.world.character.x + this.world.character.width - this.x > -300
+        );
     }
 
     jump(jumpheight) {
@@ -128,9 +110,19 @@ class MovebaleObject extends DrawableObject {
     }
 
     slowAnimation(images) {
-        if (!this.lastIdleFrame || Date.now() - this.lastIdleFrame > 1000 / 10) {
+        if (
+            !this.lastIdleFrame ||
+            Date.now() - this.lastIdleFrame > 1000 / 10
+        ) {
             this.playAnimation(images);
             this.lastIdleFrame = Date.now();
         }
+    }
+
+    handleDeath() {
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            this.y = -1000;
+        }, 100);
     }
 }
