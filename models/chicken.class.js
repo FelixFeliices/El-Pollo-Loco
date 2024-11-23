@@ -9,7 +9,7 @@ class Chicken extends MovebaleObject {
     damage = 5;
 
     chickenSound = new Audio("./assets/audio/chicken.mp3");
-    audioVolume = 0.25;
+    audioVolume = 0.2;
 
     IMAGES_WALKING = [
         "./assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",

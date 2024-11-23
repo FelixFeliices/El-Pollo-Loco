@@ -22,6 +22,8 @@ class Character extends MovebaleObject {
     damage = 100;
 
     walkingSound = new Audio("./assets/audio/walk.mp3");
+    hurtSound = new Audio("./assets/audio/hurt.mp3");
+    deathSound = new Audio("./assets/audio/death.mp3");
 
     IMAGES_IDLE = [
         "./assets/img/2_character_pepe/1_idle/idle/I-1.png",
@@ -96,6 +98,7 @@ class Character extends MovebaleObject {
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.applayGravity();
+        this.hasPlayedHurt = false;
     }
 
     animate() {
@@ -163,9 +166,14 @@ class Character extends MovebaleObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playDeathAnimation();
-            } else if (this.allowedToAnimateHurt())
+            } else if (this.allowedToAnimateHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            else if (this.isAboveGround())
+                if (!this.hasPlayedHurt) {
+                    this.hurtSound.currentTime = 0.4;
+                    this.hurtSound.play();
+                    this.hasPlayedHurt = true;
+                }
+            } else if (this.isAboveGround())
                 this.playAnimation(this.IMAGES_JUMPING);
             else if (this.allowedToAnimateWalking()) {
                 this.playAnimation(this.IMAGES_WALKING);
@@ -184,8 +192,10 @@ class Character extends MovebaleObject {
     }
 
     playDeathAnimation() {
-        this.playAnimation(this.IMAGES_DEAD);
         this.y += 20;
+        this.playAnimation(this.IMAGES_DEAD);
+        this.deathSound.volume = 0.5;
+        this.deathSound.play();
     }
 
     allowedToAnimateHurt() {
