@@ -16,6 +16,7 @@ class MovebaleObject extends DrawableObject {
     lastHit = 0;
 
     hasKilled = false;
+    hasPlayedAudio = false;
 
     applayGravity() {
         setInterval(() => {
@@ -50,6 +51,7 @@ class MovebaleObject extends DrawableObject {
     hit(damage) {
         if (!this.isHurt()) {
             this.energy -= damage;
+            this.hasPlayedAudio = false;
             if (this.energy <= 0) {
                 this.energy = 0;
             } else {

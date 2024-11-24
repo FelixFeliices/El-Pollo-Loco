@@ -10,9 +10,8 @@ class Character extends MovebaleObject {
 
     y = 155;
     baseY = this.y;
-    // speed = 3.5;
+    speed = 7;
 
-    speed = 16.5;
     lastMove = new Date().getTime();
 
     bottleBag = 0;
@@ -22,6 +21,7 @@ class Character extends MovebaleObject {
     damage = 100;
 
     walkingSound = new Audio("./assets/audio/walk.mp3");
+    jumpingSound = new Audio("./assets/audio/jump.mp3");
     hurtSound = new Audio("./assets/audio/hurt.mp3");
     deathSound = new Audio("./assets/audio/death.mp3");
 
@@ -37,6 +37,7 @@ class Character extends MovebaleObject {
         "./assets/img/2_character_pepe/1_idle/idle/I-9.png",
         "./assets/img/2_character_pepe/1_idle/idle/I-10.png",
     ];
+
     IMAGES_LONG_IDLE = [
         "./assets/img/2_character_pepe/1_idle/long_idle/I-11.png",
         "./assets/img/2_character_pepe/1_idle/long_idle/I-12.png",
@@ -89,7 +90,6 @@ class Character extends MovebaleObject {
 
     constructor() {
         super().loadImage("./assets/img/2_character_pepe/2_walk/W-21.png");
-
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);
@@ -98,7 +98,6 @@ class Character extends MovebaleObject {
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.applayGravity();
-        this.hasPlayedHurt = false;
     }
 
     animate() {
@@ -148,8 +147,16 @@ class Character extends MovebaleObject {
     handleJump() {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump(105);
+            this.playJumpAudio();
             this.lastMove = new Date().getTime();
+        } else if (this.gravity == 0) {
+            this.jumpingSound.pause();
         }
+    }
+
+    playJumpAudio() {
+        this.jumpingSound.currentTime = 1.3;
+        this.jumpingSound.play();
     }
 
     handleInteraction() {
@@ -166,13 +173,9 @@ class Character extends MovebaleObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playDeathAnimation();
+                this.playDeathAudio();
             } else if (this.allowedToAnimateHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-                if (!this.hasPlayedHurt) {
-                    this.hurtSound.currentTime = 0.4;
-                    this.hurtSound.play();
-                    this.hasPlayedHurt = true;
-                }
+                this.playHurtAnimation();
             } else if (this.isAboveGround())
                 this.playAnimation(this.IMAGES_JUMPING);
             else if (this.allowedToAnimateWalking()) {
@@ -181,6 +184,31 @@ class Character extends MovebaleObject {
                 this.playIdleAnimation();
             }
         }, 1000 / 10);
+    }
+
+    allowedToAnimateWalking() {
+        return (
+            (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
+            !this.isHurt() &&
+            !this.isDead()
+        );
+    }
+
+    allowedToAnimateHurt() {
+        return this.isHurt() && !this.hasKilled;
+    }
+
+    playHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+        if (!this.hasPlayedAudio) {
+            this.playHurtAudio();
+        }
+    }
+
+    playHurtAudio() {
+        this.hurtSound.currentTime = 0.4;
+        this.hurtSound.play();
+        this.hasPlayedAudio = true;
     }
 
     playIdleAnimation() {
@@ -194,20 +222,10 @@ class Character extends MovebaleObject {
     playDeathAnimation() {
         this.y += 20;
         this.playAnimation(this.IMAGES_DEAD);
-        this.deathSound.volume = 0.5;
+    }
+
+    playDeathAudio() {
         this.deathSound.play();
-    }
-
-    allowedToAnimateHurt() {
-        return this.isHurt() && !this.hasKilled;
-    }
-
-    allowedToAnimateWalking() {
-        return (
-            (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
-            !this.isHurt() &&
-            !this.isDead()
-        );
     }
 
     getTired() {

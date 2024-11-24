@@ -5,6 +5,9 @@ class ThrowableObject extends MovebaleObject {
     gravity = 60;
     damage = 30;
     energy = this.damage;
+    hasSplashed = false;
+
+    splashSound = new Audio("./assets/audio/bottle-break.mp3");
 
     IMAGES_BOTTLE_ROTATE = [
         "./assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -46,13 +49,22 @@ class ThrowableObject extends MovebaleObject {
     }
 
     handleAnimations() {
-        if (this.isDead()) this.handleSplash();
-        else this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
+        if (this.isDead() && !this.hasSplashed) {
+            this.handleSplash();
+        } else {
+            this.playAnimation(this.IMAGES_BOTTLE_ROTATE);
+        }
     }
 
     handleSplash() {
+        this.hasSplashed = true;
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+        this.handleSplashSound();
         this.x -= this.force - 10;
         this.y -= 45;
+    }
+
+    handleSplashSound() {
+        this.splashSound.play();
     }
 }
