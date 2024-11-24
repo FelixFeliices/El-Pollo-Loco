@@ -5,12 +5,21 @@ class StatusBar extends DrawableObject {
     x = 0;
     y = 0;
 
+    /**
+     * Initializes the status bar object by calling the parent constructor.
+     */
     constructor() {
         super();
     }
 
+    /**
+     * Resolves the correct image index based on the current percentage.
+     * The method returns an index that corresponds to a visual representation of the current status percentage.
+     *
+     * @returns {number} The index of the image to display based on the percentage.
+     */
     resolveImageIndex() {
-        if (this.percentage == 100) return 5;
+        if (this.percentage >= 100) return 5;
         else if (this.percentage >= 80) return 4;
         else if (this.percentage >= 60) return 3;
         else if (this.percentage >= 40) return 2;

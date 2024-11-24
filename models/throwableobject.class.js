@@ -1,8 +1,8 @@
 class ThrowableObject extends MovebaleObject {
     height = 80;
     width = 80;
-    force = 35;
-    gravity = 60;
+    force = 5;
+    gravity = 40;
     damage = 30;
     energy = this.damage;
     hasSplashed = false;
@@ -40,12 +40,12 @@ class ThrowableObject extends MovebaleObject {
         setInterval(() => {
             this.handleThrow();
             this.handleAnimations();
-        }, 100);
+        }, 1000 / 15);
     }
 
     handleThrow() {
         this.x += this.force;
-        this.y += 40;
+        this.y += 3;
     }
 
     handleAnimations() {
@@ -60,8 +60,6 @@ class ThrowableObject extends MovebaleObject {
         this.hasSplashed = true;
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
         this.handleSplashSound();
-        this.x -= this.force - 10;
-        this.y -= 45;
     }
 
     handleSplashSound() {

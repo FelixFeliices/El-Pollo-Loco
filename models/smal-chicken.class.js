@@ -21,6 +21,9 @@ class SmallChicken extends MovebaleObject {
         "./assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png",
     ];
 
+    /**
+     * Initializes the small chicken, loading its images and setting up animations.
+     */
     constructor() {
         super().loadImage(
             "./assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png"
@@ -31,6 +34,11 @@ class SmallChicken extends MovebaleObject {
         this.moveLeft(this.speed);
         this.chickenSound.volume = this.audioVolume;
     }
+
+    /**
+     * Starts the animation for the walking and dead states of the chicken.
+     * The chicken plays its walking animation, and upon death, it plays the death animation.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

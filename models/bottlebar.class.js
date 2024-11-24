@@ -13,11 +13,14 @@ class Bottelbar extends StatusBar {
     constructor() {
         super();
         this.loadImages(this.IMAGES_BOTTLE_AMOUNT);
-        this.setPercentage(0);
+        this.setPercentage(0); // Initially set to 0
     }
 
+    /**
+     * Sets the percentage of the bottle bar.
+     * @param {number} percentage - The percentage of bottles remaining, ranging from 0 to 100.
+     */
     setPercentage(percentage) {
-        this.percentage = percentage;
         let path = this.IMAGES_BOTTLE_AMOUNT[percentage];
         this.img = this.imgChache[path];
     }

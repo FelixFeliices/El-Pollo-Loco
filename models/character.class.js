@@ -100,11 +100,19 @@ class Character extends MovebaleObject {
         this.applayGravity();
     }
 
+    /**
+     * Main animation loop that handles character movement and animation.
+     * It calls movement and animation functions based on conditions.
+     */
     animate() {
         this.handleMovement();
         this.handleAnimations();
     }
 
+    /**
+     * Handles the movement of the character, including walking, jumping, and interaction.
+     * It is called every frame to update the character's position.
+     */
     handleMovement() {
         setInterval(() => {
             this.walkingSound.playbackRate = 1.5;
@@ -119,31 +127,53 @@ class Character extends MovebaleObject {
         }, 1000 / 60);
     }
 
+    /**
+     * Handles the character's movement direction (left or right).
+     * It checks the keyboard input and moves the character accordingly.
+     */
     handleDirection() {
         if (this.canMoveRigth()) this.handleMoveRight();
         if (this.canMoveLeft()) this.handleMoveLeft();
     }
 
+    /**
+     * Checks if the character can move to the right based on the keyboard input and the level's boundaries.
+     * @returns {boolean} - Returns true if the character can move right, false otherwise.
+     */
     canMoveRigth() {
         return this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX;
     }
 
+    /**
+     * Checks if the character can move to the left based on the keyboard input and the level's boundaries.
+     * @returns {boolean} - Returns true if the character can move left, false otherwise.
+     */
     canMoveLeft() {
         return this.world.keyboard.LEFT && this.x > -100;
     }
 
+    /**
+     * Moves the character to the right.
+     */
     handleMoveRight() {
         this.walkRight(this.speed);
         this.otherDirection = false;
         this.lastMove = new Date().getTime();
     }
 
+    /**
+     * Moves the character to the left.
+     */
     handleMoveLeft() {
         this.walkLeft(this.speed);
         this.otherDirection = true;
         this.lastMove = new Date().getTime();
     }
 
+    /**
+     * Handles the character's jumping logic.
+     * The character can only jump if they are not currently in the air.
+     */
     handleJump() {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump(105);
@@ -154,21 +184,35 @@ class Character extends MovebaleObject {
         }
     }
 
+    /**
+     * Plays the jumping sound effect.
+     */
     playJumpAudio() {
         this.jumpingSound.currentTime = 1.3;
         this.jumpingSound.play();
     }
 
+    /**
+     * Handles interactions when certain conditions are met.
+     * For example, plays a sound when interacting with a chicken.
+     */
     handleInteraction() {
         if (this.world.firstInteraction) {
             this.world.level.enemies[0].chickenSound.play();
         }
     }
 
+    /**
+     * Updates the camera position to follow the character.
+     */
     updateCameraPosition() {
         this.world.camera_x = -this.x + 100;
     }
 
+    /**
+     * Handles the animation of the character based on their current state.
+     * This includes idle, walking, jumping, hurt, and dead animations.
+     */
     handleAnimations() {
         setInterval(() => {
             if (this.isDead()) {
@@ -186,6 +230,10 @@ class Character extends MovebaleObject {
         }, 1000 / 10);
     }
 
+    /**
+     * Checks if the character is allowed to animate the walking state.
+     * @returns {boolean} - Returns true if the character is allowed to animate walking, false otherwise.
+     */
     allowedToAnimateWalking() {
         return (
             (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &&
@@ -194,10 +242,17 @@ class Character extends MovebaleObject {
         );
     }
 
+    /**
+     * Checks if the character is allowed to animate the hurt state.
+     * @returns {boolean} - Returns true if the character is allowed to animate hurt, false otherwise.
+     */
     allowedToAnimateHurt() {
         return this.isHurt() && !this.hasKilled;
     }
 
+    /**
+     * Plays the hurt animation when the character gets hurt.
+     */
     playHurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
         if (!this.hasPlayedAudio) {
@@ -205,12 +260,18 @@ class Character extends MovebaleObject {
         }
     }
 
+    /**
+     * Plays the hurt sound effect.
+     */
     playHurtAudio() {
         this.hurtSound.currentTime = 0.4;
         this.hurtSound.play();
         this.hasPlayedAudio = true;
     }
 
+    /**
+     * Plays the idle animation. The character may play a long idle animation if they are tired.
+     */
     playIdleAnimation() {
         if (this.getTired()) {
             this.slowAnimation(this.IMAGES_LONG_IDLE);
@@ -219,21 +280,35 @@ class Character extends MovebaleObject {
         }
     }
 
+    /**
+     * Plays the death animation when the character dies.
+     */
     playDeathAnimation() {
         this.y += 20;
         this.playAnimation(this.IMAGES_DEAD);
     }
 
+    /**
+     * Plays the death sound effect.
+     */
     playDeathAudio() {
         this.deathSound.play();
     }
 
+    /**
+     * Checks if the character is tired based on the time passed since the last movement.
+     * @returns {boolean} - Returns true if the character is tired, false otherwise.
+     */
     getTired() {
         let timepassed = new Date().getTime() - this.lastMove;
         timepassed = timepassed / 1000;
         return timepassed > 4;
     }
 
+    /**
+     * Collects an item, such as a bottle or coin.
+     * @param {Object} item - The item to be collected.
+     */
     collect(item) {
         if (item instanceof Bottle) this.bottleBag++;
         if (item instanceof Coin) this.coins++;

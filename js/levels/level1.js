@@ -3,8 +3,7 @@ let chickenAmount = 5;
 let smallChickenAmount = 5;
 let bottleAmount = 5;
 let coinAmount = 10;
-
-const backgroundData = [
+let backgroundData = [
     ["./assets/img/5_background/layers/air.png", -719],
     ["./assets/img/5_background/layers/3_third_layer/2.png", -719],
     ["./assets/img/5_background/layers/2_second_layer/2.png", -719],
@@ -41,6 +40,12 @@ const backgroundData = [
     ["./assets/img/5_background/layers/1_first_layer/2.png", 719 * 5],
 ];
 
+/**
+ * Generates a specified amount of elements of a given class.
+ * @param {Function} ElementClass - The class constructor to instantiate elements.
+ * @param {number} amount - The number of elements to generate.
+ * @returns {Array} The array of generated elements.
+ */
 function generateElements(ElementClass, amount) {
     const elements = [];
     for (let i = 0; i < amount; i++) {
@@ -49,12 +54,20 @@ function generateElements(ElementClass, amount) {
     return elements;
 }
 
+/**
+ * Generates background objects from the provided data.
+ * @param {Array} data - The background data consisting of image paths and positions.
+ * @returns {Array} The array of BackgroundObject instances.
+ */
 function generateBackgroundObjects(data) {
     return data.map(
         ([image, position]) => new BackgroundObject(image, position)
     );
 }
 
+/**
+ * Sets up the level with chickens, small chickens, bottles, coins, clouds, and background objects.
+ */
 function setLevel() {
     level1 = new Level(
         [

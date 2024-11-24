@@ -1,6 +1,3 @@
-/**
- * World class that represents the game world, including the character, level, and various game elements.
- */
 class World {
     character = new Character();
     level = level1;

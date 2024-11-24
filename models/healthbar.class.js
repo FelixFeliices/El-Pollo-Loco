@@ -8,12 +8,19 @@ class Healthbar extends StatusBar {
         "./assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png",
     ];
 
+    /**
+     * Initializes the health bar with full health (100%) and loads the images.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH_BAR);
         this.setPercentage(100);
     }
 
+    /**
+     * Sets the health bar's percentage and updates the image based on the health value.
+     * @param {number} percentage - The health percentage (0 to 100).
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_HEALTH_BAR[this.resolveImageIndex(percentage)];

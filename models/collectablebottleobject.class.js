@@ -8,6 +8,10 @@ class Bottle extends DrawableObject {
         "./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
     ];
 
+    /**
+     * Initializes the Bottle object.
+     * Loads the bottle images and assigns a random image from the list.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_BOTTLE);

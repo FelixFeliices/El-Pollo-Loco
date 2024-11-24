@@ -47,6 +47,11 @@ class Endboss extends MovebaleObject {
         "./assets/img/4_enemie_boss_chicken/5_dead/G26.png",
     ];
 
+    /**
+     * Initializes the Endboss with its properties, images, and sounds.
+     * Loads walking, alert, hurt, and dead animations.
+     * Sets up gravity and sound volume.
+     */
     constructor() {
         super().loadImage(
             "./assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
@@ -61,6 +66,11 @@ class Endboss extends MovebaleObject {
         this.chickenSound.volume = this.audioVolume;
     }
 
+    /**
+     * Main animation loop for the Endboss. It checks the state of the Endboss and
+     * updates the animation accordingly (hurt, dead, alert, or walking).
+     * The loop runs every 500ms.
+     */
     animate() {
         setInterval(() => {
             if (this.isHurt()) {
@@ -75,6 +85,10 @@ class Endboss extends MovebaleObject {
         }, 1000 / 2);
     }
 
+    /**
+     * Handles the Endboss's behavior when it is hurt.
+     * Plays the hurt animation and causes the Endboss to jump.
+     */
     handleHurt() {
         this.playAnimation(this.IMAGES_HURT);
         if (!this.hasJumped) {
@@ -85,6 +99,10 @@ class Endboss extends MovebaleObject {
         }
     }
 
+    /**
+     * Handles the Endboss's behavior when it is dead.
+     * Plays the dead animation and slightly lowers its position.
+     */
     handleDead() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_DEAD);
@@ -92,12 +110,20 @@ class Endboss extends MovebaleObject {
         }, 1000 / 20);
     }
 
+    /**
+     * Handles the Endboss's alert state.
+     * Plays the alert animation and halts its movement.
+     */
     handleAlert() {
         this.playAnimation(this.IMAGES_ALERT);
         this.speed = 0;
         this.x -= this.speed;
     }
 
+    /**
+     * Handles the Endboss's normal walking behavior.
+     * Plays the walking animation and moves the Endboss to the left.
+     */
     handleWalking() {
         this.playAnimation(this.IMAGES_WALKING);
         this.speed = 0.05;
