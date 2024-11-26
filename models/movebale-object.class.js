@@ -38,6 +38,8 @@ class MovebaleObject extends DrawableObject {
 
     /**
      * Checks whether the object is above the ground.
+     * Special case: Always true for ThrowableObject.
+     *
      * @returns {boolean} True if the object is above the ground, false otherwise.
      */
     isAboveGround() {
