@@ -96,6 +96,7 @@ class World {
         setTimeout(() => {
             this.clearAllIntervals();
             document.getElementById("play-btn").classList.remove("d-none");
+            document.getElementById("help-bar").classList.remove("d-none");
         }, time);
     }
 
@@ -198,7 +199,6 @@ class World {
      * Handles the case when the character falls on an enemy, dealing damage to the enemy.
      * @param {Enemy} enemy - The enemy that is being fallen on.
      */
-    handl;
     handleFallingOnEnemy(enemy) {
         enemy.hit(this.character.damage);
         if (enemy.isDead()) this.character.hasKilled = true;

@@ -49,17 +49,25 @@ function checkMobileMode() {
 }
 
 /**
- * Initializes the game environment, hides the play button, and starts the game.
+ * Initializes the game environment, hides the play button and help-bar, and starts the game.
  */
 function gameInit() {
-    document.getElementById("play-btn").classList.add("d-none");
-    document.getElementById("game-overlay").classList.add("d-none");
-    document.getElementById("canvas").classList.remove("d-none");
     checkMobileMode();
     setLevel();
     playAudio();
+    hideUIElements();
     world = new World(canvas, keyboard);
     gameActive = true;
+}
+
+/**
+ * Hides UI elements related to the game setup, such as the play button, overlay, and help-bar.
+ */
+function hideUIElements() {
+    document.getElementById("play-btn").classList.add("d-none");
+    document.getElementById("game-overlay").classList.add("d-none");
+    document.getElementById("canvas").classList.remove("d-none");
+    document.getElementById("help-bar").classList.add("d-none");
 }
 
 /**
@@ -179,10 +187,6 @@ window.addEventListener("keyup", (event) => {
  */
 function startUserAction(userAction, event) {
     event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-
-    console.log(event);
 
     document.getElementById(userAction + "-btn").style.scale = "1.1";
     if (userAction == "left") {

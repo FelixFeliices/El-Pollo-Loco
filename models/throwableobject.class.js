@@ -57,7 +57,6 @@ class ThrowableObject extends MovebaleObject {
      */
     handleThrow() {
         this.x += this.force;
-        // this.y += this.acceleration;
     }
 
     /**
@@ -84,6 +83,7 @@ class ThrowableObject extends MovebaleObject {
      * Plays the splash sound effect.
      */
     handleSplashSound() {
+        this.splashSound.currentTime = 0.4;
         this.splashSound.play();
     }
 }
