@@ -41,8 +41,7 @@ class MovebaleObject extends DrawableObject {
      * @returns {boolean} True if the object is above the ground, false otherwise.
      */
     isAboveGround() {
-        if (this instanceof ThrowableObject && !(this instanceof Bottle))
-            return false;
+        if (this instanceof ThrowableObject) return true;
         else return this.y < this.baseY;
     }
 

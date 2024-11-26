@@ -1,8 +1,9 @@
 class ThrowableObject extends MovebaleObject {
     height = 80;
     width = 80;
-    force = 5;
-    gravity = 40;
+    force = 20;
+    gravity = 20;
+    acceleration = 3;
     damage = 30;
     energy = this.damage;
     hasSplashed = false;
@@ -25,6 +26,11 @@ class ThrowableObject extends MovebaleObject {
         "./assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
     ];
 
+    /**
+     * Constructs a throwable object.
+     * @param {number} x - The initial x-coordinate.
+     * @param {number} y - The initial y-coordinate.
+     */
     constructor(x, y) {
         super();
         this.loadImages(this.IMAGES_BOTTLE_ROTATE);
@@ -35,6 +41,9 @@ class ThrowableObject extends MovebaleObject {
         this.throw();
     }
 
+    /**
+     * Initiates the throw action, applying gravity and setting up animations.
+     */
     throw() {
         this.applayGravity();
         setInterval(() => {
@@ -43,11 +52,17 @@ class ThrowableObject extends MovebaleObject {
         }, 1000 / 15);
     }
 
+    /**
+     * Handles the object's position update during a throw.
+     */
     handleThrow() {
         this.x += this.force;
-        this.y += 3;
+        // this.y += this.acceleration;
     }
 
+    /**
+     * Handles animations during the throw or upon splash.
+     */
     handleAnimations() {
         if (this.isDead() && !this.hasSplashed) {
             this.handleSplash();
@@ -56,12 +71,18 @@ class ThrowableObject extends MovebaleObject {
         }
     }
 
+    /**
+     * Executes splash logic, including animation and sound effects.
+     */
     handleSplash() {
         this.hasSplashed = true;
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
         this.handleSplashSound();
     }
 
+    /**
+     * Plays the splash sound effect.
+     */
     handleSplashSound() {
         this.splashSound.play();
     }
