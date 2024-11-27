@@ -60,10 +60,6 @@ function gameInit() {
 
 /**
  * Checks the current mute status and updates the visibility of mute/unmute UI elements accordingly.
- *
- * If the mute status indicates that the sound is enabled (not muted), it toggles the visibility
- * of the "disable-mute" button. If the sound is muted, it ensures that the "disable-mute" button
- * is visible and the "enable-mute" button is hidden.
  */
 function checkMuteStatus() {
     console.log(getMuteStatus());
