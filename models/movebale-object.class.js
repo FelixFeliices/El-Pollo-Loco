@@ -57,8 +57,7 @@ class MovebaleObject extends DrawableObject {
             this.x + this.width - this.offset.RIGHT > mo.x + mo.offset.LEFT &&
             this.y + this.height + this.offset.DOWN > mo.y + mo.offset.UP &&
             this.x + this.offset.LEFT < mo.x + mo.width - mo.offset.RIGHT &&
-            this.y + this.offset.UP < mo.y + mo.height - mo.offset.DOWN &&
-            !this.isHurt()
+            this.y + this.offset.UP < mo.y + mo.height - mo.offset.DOWN
         );
     }
 

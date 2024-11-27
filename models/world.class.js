@@ -162,7 +162,7 @@ class World {
             this.checkThrowableObjectCollisions();
             this.checkCoinCollisions();
             this.checkEndbossCollisions();
-        }, 1000 / 60);
+        }, 1000 / 80);
     }
 
     /**
@@ -170,7 +170,9 @@ class World {
      */
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) this.handleCollision(enemy);
+            if (this.character.isColliding(enemy)) {
+                this.handleCollision(enemy);
+            }
         });
     }
 
@@ -189,10 +191,7 @@ class World {
      * @returns {boolean} True if the character is falling on the enemy, false otherwise.
      */
     isFallingOnEnemy(enemy) {
-        return (
-            this.character.y + this.character.height - enemy.y - enemy.height <
-                -30 && !(enemy instanceof Endboss)
-        );
+        return this.character.gravity < 0 && !(enemy instanceof Endboss);
     }
 
     /**
