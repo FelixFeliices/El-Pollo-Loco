@@ -35,6 +35,17 @@ class Endboss extends MovebaleObject {
         "./assets/img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
 
+    IMAGES_ATTACK = [
+        "./assets/img/4_enemie_boss_chicken/3_attack/G13.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G14.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G15.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G16.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G17.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G18.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G19.png",
+        "./assets/img/4_enemie_boss_chicken/3_attack/G20.png",
+    ];
+
     IMAGES_HURT = [
         "./assets/img/4_enemie_boss_chicken/4_hurt/G21.png",
         "./assets/img/4_enemie_boss_chicken/4_hurt/G22.png",
@@ -58,6 +69,7 @@ class Endboss extends MovebaleObject {
         );
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
+        this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
@@ -75,14 +87,35 @@ class Endboss extends MovebaleObject {
         setInterval(() => {
             if (this.isHurt()) {
                 this.handleHurt();
+                this.handleAttack();
             } else if (this.isDead()) {
                 this.handleDead();
             } else if (this.toNear() && this.energy > 75) {
                 this.handleAlert();
-            } else {
+            } else if (!this.isHurt()) {
                 this.handleWalking();
             }
         }, 1000 / 2);
+    }
+
+    /**
+     * Handles the Endboss's behavior when it is Attacking.
+     * Plays the attack animation and increase the Endboss speed.
+     */
+    handleAttack() {
+        this.playAnimation(this.IMAGES_ATTACK);
+        if (this.energy < 80) {
+            this.speed = 0.25;
+        }
+        if (this.energy <= 60) {
+            this.speed = 0.3;
+        }
+        if (this.energy <= 40) {
+            this.speed = 0.35;
+        }
+        if (this.energy <= 20) {
+            this.speed = 0.45;
+        }
     }
 
     /**
@@ -122,7 +155,8 @@ class Endboss extends MovebaleObject {
 
     /**
      * Handles the Endboss's normal walking behavior.
-     * Plays the walking animation and moves the Endboss to the left.
+     * Plays the walking animation and moves the Endboss to the left only when the Endboss is not Hurt. If the energy is lower or equal than
+     * 20 run faster  and attack
      */
     handleWalking() {
         this.playAnimation(this.IMAGES_WALKING);

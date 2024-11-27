@@ -4,7 +4,7 @@ class ThrowableObject extends MovebaleObject {
     force = 20;
     gravity = 20;
     acceleration = 3;
-    damage = 30;
+    damage = 20;
     energy = this.damage;
     hasSplashed = false;
 
