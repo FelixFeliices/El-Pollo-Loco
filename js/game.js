@@ -199,7 +199,7 @@ function startUserAction(userAction, event) {
         keyboard.UP = true;
     }
     if (userAction == "throw") {
-        keyboard.TROW = true;
+        keyboard.THROW = true;
     }
 }
 
@@ -220,6 +220,6 @@ function endUserAction(userAction) {
         keyboard.UP = false;
     }
     if (userAction == "throw") {
-        keyboard.TROW = false;
+        keyboard.THROW = false;
     }
 }

@@ -126,6 +126,8 @@ class World {
      * Checks if the player is attempting to throw an object and processes the action.
      */
     checkThrowObjects() {
+        console.log(this.keyboard.THROW);
+
         if (this.keyboard.THROW) {
             if (this.checkThrowAllowed()) {
                 let bottle = new ThrowableObject(
