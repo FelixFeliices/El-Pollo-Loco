@@ -89,6 +89,13 @@
                     src="./assets/icons/exit-fullscreen.png" alt=""></button>
         </div>
 
+        <div class="mute-container">
+            <button id="enable-mute" onclick="saveMuteStatus('enable')" class="btn"> <img class="icon"
+                    src="./assets/icons/mute.png" alt=""></button>
+            <button id="disable-mute" onclick="saveMuteStatus('disable')" class="btn"> <img class="icon"
+                    src="./assets/icons/volume.png" alt=""></button>
+        </div>
+
         <div id="mobile-action-btns" class="d-flex justify-space-between mobile-action-btns d-none w-100">
             <div>
                 <button ontouchstart="startUserAction('left', event)" ontouchend="endUserAction('left')" id="left-btn">

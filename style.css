@@ -95,3 +95,9 @@ canvas {
 .icon {
     width: 40px;
 }
+
+.mute-container {
+    position: absolute;
+    top: 8px;
+    right: 0;
+}

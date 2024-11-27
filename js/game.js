@@ -10,7 +10,6 @@ let backgroundAudio = [
     new Audio("./assets/audio/eagle-squawking-type-2.mp3"),
     new Audio("./assets/audio/eagle-squawking-type-3.mp3"),
 ];
-
 /**
  * Initializes the game by setting up the canvas, game element, and checking orientation.
  */
@@ -19,7 +18,7 @@ function init() {
     game = document.getElementById("game");
     checkOrientation(portrait);
     checkGameActive();
-
+    checkMuteStatus();
     window.addEventListener("resize", () => {
         portrait = window.innerHeight > window.innerWidth;
         checkOrientation(portrait);
@@ -54,10 +53,54 @@ function checkMobileMode() {
 function gameInit() {
     checkMobileMode();
     setLevel();
-    playAudio();
     hideUIElements();
     world = new World(canvas, keyboard);
     gameActive = true;
+}
+
+/**
+ * Checks the current mute status and updates the visibility of mute/unmute UI elements accordingly.
+ *
+ * If the mute status indicates that the sound is enabled (not muted), it toggles the visibility
+ * of the "disable-mute" button. If the sound is muted, it ensures that the "disable-mute" button
+ * is visible and the "enable-mute" button is hidden.
+ */
+function checkMuteStatus() {
+    console.log(getMuteStatus());
+    if (!getMuteStatus()) {
+        document.getElementById("disable-mute").classList.toggle("d-none");
+    } else if (getMuteStatus()) {
+        document.getElementById("disable-mute").classList.remove("d-none");
+        document.getElementById("enable-mute").classList.add("d-none");
+    }
+}
+
+/**
+ * Saves the mute status in localStorage.
+ *
+ * @param {string} status - The status to be saved, either "enable" to mute or "disable" to unmute.
+ *                          If "enable", the mute status is set to "true".
+ *                          If "disable", the mute status is set to "false".
+ */
+function saveMuteStatus(status) {
+    if (status == "enable") {
+        localStorage.setItem("isMuted", "true");
+        document.getElementById("enable-mute").classList.toggle("d-none");
+        document.getElementById("disable-mute").classList.toggle("d-none");
+    } else if (status == "disable") {
+        localStorage.setItem("isMuted", "false");
+        document.getElementById("enable-mute").classList.toggle("d-none");
+        document.getElementById("disable-mute").classList.toggle("d-none");
+    }
+}
+
+/**
+ * Retrieves the mute status from localStorage and parses it to a boolean.
+ * @returns {boolean} The mute status (true for muted, false for unmuted).
+ */
+function getMuteStatus() {
+    let muteStatus = localStorage.getItem("isMuted");
+    return JSON.parse(muteStatus);
 }
 
 /**
@@ -68,18 +111,6 @@ function hideUIElements() {
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
     document.getElementById("help-bar").classList.add("d-none");
-}
-
-/**
- * Plays background audio with random selection and interval.
- */
-function playAudio() {
-    let randomNumber = Math.round(Math.random() * 2);
-    backgroundAudio[randomNumber].volume = 0.1;
-    backgroundAudio[randomNumber].play();
-
-    let randomInterval = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
-    setTimeout(playAudio, randomInterval);
 }
 
 /**

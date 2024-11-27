@@ -12,6 +12,7 @@ class World {
     coinbar = new Coinbar();
     msg = new GameOverMsg();
     winMsg = new WinMsg();
+    characterSounds = [];
 
     /**
      * Creates an instance of the World class.
@@ -22,7 +23,12 @@ class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
-
+        this.characterSounds = [
+            this.character.walkingSound,
+            this.character.jumpingSound,
+            this.character.hurtSound,
+            this.character.deathSound,
+        ];
         this.startGame();
     }
 
@@ -32,6 +38,7 @@ class World {
     startGame() {
         this.draw();
         this.setWorld();
+        this.playAudio();
         this.run();
     }
 
@@ -54,7 +61,82 @@ class World {
             this.checkThrowObjects();
             this.addNewBottels();
             this.handleGameStatus();
+            this.checkMuteStatus();
         }, 1000 / 8);
+    }
+
+    /**
+     * Retrieves the mute status from localStorage and parses it to a boolean.
+     * @returns {boolean} The mute status (true for muted, false for unmuted).
+     */
+    getMuteStatus() {
+        let muteStatus = localStorage.getItem("isMuted");
+        return JSON.parse(muteStatus);
+    }
+
+    /**
+     * Checks the mute status and toggles sound accordingly.
+     * Calls muteSound() if muted, and unMuteSound() if not muted.
+     */
+    checkMuteStatus() {
+        if (this.getMuteStatus()) {
+            this.muteSound();
+        } else if (!this.getMuteStatus()) {
+            this.unMuteSound();
+        }
+    }
+
+    /**
+     * Mutes all game sounds, including background audio, enemy sounds, throwable object sounds,
+     * and character sounds.
+     */
+    muteSound() {
+        backgroundAudio.forEach((bgAudio) => {
+            bgAudio.muted = true;
+        });
+        this.level.enemies.forEach((enemy) => {
+            enemy.chickenSound.muted = true;
+        });
+        this.level.throwableObjects.forEach((throwableObject) => {
+            if (throwableObject instanceof ThrowableObject)
+                throwableObject.splashSound.muted = true;
+        });
+        this.characterSounds.forEach((character) => {
+            character.muted = true;
+        });
+    }
+
+    /**
+     * Unmutes all game sounds, including background audio, enemy sounds, throwable object sounds,
+     * and character sounds.
+     */
+    unMuteSound() {
+        backgroundAudio.forEach((bgAudio) => {
+            bgAudio.muted = false;
+        });
+        this.level.enemies.forEach((enemy) => {
+            enemy.chickenSound.muted = false;
+        });
+        this.level.throwableObjects.forEach((throwableObject) => {
+            if (throwableObject instanceof ThrowableObject)
+                throwableObject.splashSound.muted = false;
+        });
+        this.characterSounds.forEach((characterSound) => {
+            characterSound.muted = false;
+        });
+    }
+
+    /**
+     * Plays background audio with random selection and interval.
+     */
+    playAudio() {
+        let randomNumber = Math.round(Math.random() * 2);
+        backgroundAudio[randomNumber].volume = 0.1;
+        backgroundAudio[randomNumber].play();
+
+        let randomInterval =
+            Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+        setTimeout(() => this.playAudio(), randomInterval);
     }
 
     /**
@@ -126,8 +208,6 @@ class World {
      * Checks if the player is attempting to throw an object and processes the action.
      */
     checkThrowObjects() {
-        console.log(this.keyboard.THROW);
-
         if (this.keyboard.THROW) {
             if (this.checkThrowAllowed()) {
                 let bottle = new ThrowableObject(
@@ -164,7 +244,7 @@ class World {
             this.checkThrowableObjectCollisions();
             this.checkCoinCollisions();
             this.checkEndbossCollisions();
-        }, 1000 / 80);
+        }, 1000 / 100);
     }
 
     /**
