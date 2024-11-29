@@ -101,3 +101,33 @@ canvas {
     top: 8px;
     right: 0;
 }
+
+.legal-btn {
+    position: absolute;
+    top: 8px;
+    left: 0;
+}
+
+footer {
+    position: absolute;
+    display: flex;
+    gap: 8px;
+    bottom: 32px;
+
+}
+
+.legal-container {
+    position: relative;
+    display: block;
+}
+
+.legal-container a {
+    transition: all 0.125s ease-in-out;
+    position: absolute;
+    top: 16px;
+    left: -80px;
+}
+
+.active {
+    left: 64px !important;
+}

@@ -104,6 +104,7 @@ class World {
         this.characterSounds.forEach((character) => {
             character.muted = true;
         });
+        backgroundMusic.muted = true;
     }
 
     /**
@@ -124,6 +125,7 @@ class World {
         this.characterSounds.forEach((characterSound) => {
             characterSound.muted = false;
         });
+        backgroundMusic.muted = false;
     }
 
     /**
@@ -131,8 +133,10 @@ class World {
      */
     playAudio() {
         let randomNumber = Math.round(Math.random() * 2);
-        backgroundAudio[randomNumber].volume = 0.1;
+        backgroundAudio[randomNumber].volume = 0.05;
+        backgroundMusic.volume = 0.2;
         backgroundAudio[randomNumber].play();
+        backgroundMusic.play();
 
         let randomInterval =
             Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;

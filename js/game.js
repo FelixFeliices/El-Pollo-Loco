@@ -10,6 +10,7 @@ let backgroundAudio = [
     new Audio("./assets/audio/eagle-squawking-type-2.mp3"),
     new Audio("./assets/audio/eagle-squawking-type-3.mp3"),
 ];
+let backgroundMusic = new Audio("./assets/audio/bg-music-2.mp3");
 /**
  * Initializes the game by setting up the canvas, game element, and checking orientation.
  */
@@ -19,6 +20,7 @@ function init() {
     checkOrientation(portrait);
     checkGameActive();
     checkMuteStatus();
+    checkMobileMode();
     window.addEventListener("resize", () => {
         portrait = window.innerHeight > window.innerWidth;
         checkOrientation(portrait);
@@ -40,6 +42,12 @@ function isMobile() {
  */
 function checkMobileMode() {
     if (isMobile()) {
+        document.getElementById("footer").classList.add("d-none");
+        document
+            .getElementById("legal-mobile-container")
+            .classList.remove("d-none");
+    }
+    if (isMobile() && gameActive) {
         document
             .getElementById("mobile-action-btns")
             .classList.remove("d-none");
@@ -51,18 +59,17 @@ function checkMobileMode() {
  * Initializes the game environment, hides the play button and help-bar, and starts the game.
  */
 function gameInit() {
+    gameActive = true;
     checkMobileMode();
     setLevel();
     hideUIElements();
     world = new World(canvas, keyboard);
-    gameActive = true;
 }
 
 /**
  * Checks the current mute status and updates the visibility of mute/unmute UI elements accordingly.
  */
 function checkMuteStatus() {
-    console.log(getMuteStatus());
     if (!getMuteStatus()) {
         document.getElementById("disable-mute").classList.toggle("d-none");
     } else if (getMuteStatus()) {
@@ -107,6 +114,10 @@ function hideUIElements() {
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
     document.getElementById("help-bar").classList.add("d-none");
+}
+
+function toogleDialog() {
+    document.getElementById("legal-link").classList.toggle("active");
 }
 
 /**

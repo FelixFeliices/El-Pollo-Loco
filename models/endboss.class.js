@@ -105,16 +105,16 @@ class Endboss extends MovebaleObject {
     handleAttack() {
         this.playAnimation(this.IMAGES_ATTACK);
         if (this.energy < 80) {
-            this.speed = 0.25;
+            this.speed = 0.15;
         }
         if (this.energy <= 60) {
-            this.speed = 0.3;
+            this.speed = 0.2;
         }
         if (this.energy <= 40) {
-            this.speed = 0.35;
+            this.speed = 0.25;
         }
         if (this.energy <= 20) {
-            this.speed = 0.45;
+            this.speed = 0.35;
         }
     }
 

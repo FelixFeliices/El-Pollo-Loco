@@ -20,11 +20,15 @@
     --game-width: 1024px;
     --game-height: 480px;
     --yellow: rgba(255, 207, 17, 0.66);
+    --grey: rgba(211, 211, 211, 0.5);
     --bg-shadow: rgba(0, 0, 0, 0.8);
     --bg-shadow-light: rgba(0, 0, 0, 0.3);
     --bg-shadow-white: rgba(255, 255, 255, 0.6)
 }
 
+a {
+    text-decoration: none;
+}
 
 button {
     border: unset;
@@ -80,4 +84,37 @@ button:hover {
 
 .h-100 {
     height: 100%;
+}
+
+
+section {
+    margin-top: 36px;
+}
+
+h2,
+h3,
+h4 {
+    margin-top: 16px;
+}
+
+p {
+    margin-top: 8px;
+}
+
+.container {
+    margin-bottom: 64px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

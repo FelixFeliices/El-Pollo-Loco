@@ -54,8 +54,11 @@
         </button>
 
 
-
-
+        <div id="legal-mobile-container" class="legal-container d-none">
+            <button onclick="toogleDialog(); event.stopPropagation" id="legal-btn" class="btn legal-btn"><img
+                    class="icon" src="./assets/icons/question.png"></button>
+            <a id="legal-link" class="" target="_blank" href="./legal-notice.html">Legal Notice</a>
+        </div>
 
         <div onclick="event.stopPropagation" id="help-bar" class="help-bar d-flex w-100">
             <div class="center-column">
@@ -89,7 +92,7 @@
                     src="./assets/icons/exit-fullscreen.png" alt=""></button>
         </div>
 
-        <div class="mute-container">
+        <div id="mute-container" class="mute-container">
             <button id="enable-mute" onclick="saveMuteStatus('enable')" class="btn"> <img class="icon"
                     src="./assets/icons/mute.png" alt=""></button>
             <button id="disable-mute" onclick="saveMuteStatus('disable')" class="btn"> <img class="icon"
@@ -122,6 +125,9 @@
 
     </div>
 
+    <footer id="footer">
+        <a target="_blank" href="./legal-notice.html">Legal Notice</a>
+    </footer>
 </body>
 
 <div id="turn-msg-overlay" class="overlay turn-msg hide center-column w-100 h-100">
@@ -130,6 +136,9 @@
     </div>
     <span>Please turn your Device!</span>
 </div>
+
+
+
 
 
 
