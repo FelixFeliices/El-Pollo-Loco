@@ -17,7 +17,7 @@ class Character extends MovebaleObject {
     bottleBag = 0;
     coins = 0;
 
-    energy = 100;
+    energy = 1;
     damage = 100;
 
     walkingSound = new Audio("./assets/audio/walk.mp3");

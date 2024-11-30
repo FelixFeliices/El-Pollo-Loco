@@ -181,6 +181,8 @@ class World {
     stopGame(time) {
         setTimeout(() => {
             this.clearAllIntervals();
+            document.getElementById("game-btns").classList.remove("d-none");
+            document.getElementById("play-btn").classList.remove("d-none");
             document.getElementById("menü-btn").classList.remove("d-none");
         }, time);
     }

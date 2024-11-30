@@ -49,13 +49,16 @@
 
         <canvas id="canvas" width="720" height="480" class="w-100 h-100"></canvas>
 
-        <button id="play-btn" onclick="gameInit()" class="btn play w-100">
-            <img src="./assets/icons/start-button.png" alt="">
-        </button>
+        <div id="game-btns" class="d-flex w-100 btn-row">
+            <button id="play-btn" onclick="gameInit()" class="btn">
+                <img class="game-btn start-button" src="./assets/icons/start-button.png" alt="">
+            </button>
 
-        <button id="menü-btn" onclick="init()" class="btn menu-btn w-100 d-none">
-            <img src="./assets/icons/undo.png" alt="">
-        </button>
+            <button id="menü-btn" onclick="init()" class="btn d-none game-btn">
+                <img class="game-btn" src="./assets/icons/home.png" alt="">
+            </button>
+        </div>
+
 
 
         <div id="legal-mobile-container" class="legal-container d-none">

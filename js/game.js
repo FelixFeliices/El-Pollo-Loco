@@ -22,14 +22,14 @@ function init() {
     checkGameActive();
     checkMuteStatus();
     checkMobileMode();
-    handleUIIElements();
+    handleUIElements();
     window.addEventListener("resize", () => {
         portrait = window.innerHeight > window.innerWidth;
         checkOrientation(portrait);
     });
 }
 
-function handleUIIElements() {
+function handleUIElements() {
     document.getElementById("menü-btn").classList.add("d-none");
     document.getElementById("game-overlay").classList.remove("d-none");
     document.getElementById("play-btn").classList.remove("d-none");
@@ -119,8 +119,9 @@ function getMuteStatus() {
  * Hides UI elements related to the game setup, such as the play button, overlay, and help-bar.
  */
 function hideUIElements() {
-    document.getElementById("play-btn").classList.add("d-none");
-    document.getElementById("menü-btn").classList.add("d-none");
+    document.getElementById("game-btns").classList.add("d-none");
+    // document.getElementById("play-btn").classList.add("d-none");
+    // document.getElementById("menü-btn").classList.add("d-none");
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
     document.getElementById("help-bar").classList.add("d-none");

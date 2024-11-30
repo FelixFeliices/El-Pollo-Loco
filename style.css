@@ -39,26 +39,24 @@ canvas {
     border-radius: 8px;
 }
 
-.play {
-    top: 40px;
+.btn-row {
     position: absolute;
+    justify-content: space-evenly;
+    padding: 0 100px;
+    top: 40px;
 }
 
-.play img {
+.game-btn {
     object-fit: cover;
+    height: 80px;
+}
+
+.start-button {
     width: 160px;
-    height: 80px;
 }
 
-.menu-btn {
-    top: 40px;
-    position: absolute;
-}
 
-.menu-btn img {
-    object-fit: cover;
-    height: 80px;
-}
+
 
 .screen-btns {
     position: absolute;
