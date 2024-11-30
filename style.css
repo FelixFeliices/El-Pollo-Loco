@@ -50,6 +50,16 @@ canvas {
     height: 80px;
 }
 
+.menu-btn {
+    top: 40px;
+    position: absolute;
+}
+
+.menu-btn img {
+    object-fit: cover;
+    height: 80px;
+}
+
 .screen-btns {
     position: absolute;
     right: 8px;

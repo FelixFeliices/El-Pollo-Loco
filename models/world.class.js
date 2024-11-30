@@ -175,14 +175,13 @@ class World {
     }
 
     /**
-     * Stops the game after a given timeout and shows the play button again.
+     * Stops the game after a given timeout and shows the Menu button again.
      * @param {number} time - The time in milliseconds before stopping the game.
      */
     stopGame(time) {
         setTimeout(() => {
             this.clearAllIntervals();
-            document.getElementById("play-btn").classList.remove("d-none");
-            document.getElementById("help-bar").classList.remove("d-none");
+            document.getElementById("menü-btn").classList.remove("d-none");
         }, time);
     }
 
