@@ -10,13 +10,12 @@
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
+    -webkit-touch-callout: none;
     -webkit-user-drag: none;
     -moz-user-select: none;
 }
 
 :root {
-
     --game-width: 1024px;
     --game-height: 480px;
     --yellow: rgba(255, 207, 17, 0.66);
