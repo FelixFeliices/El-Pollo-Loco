@@ -120,8 +120,8 @@ function getMuteStatus() {
  */
 function hideUIElements() {
     document.getElementById("game-btns").classList.add("d-none");
-    // document.getElementById("play-btn").classList.add("d-none");
-    // document.getElementById("menü-btn").classList.add("d-none");
+    document.getElementById("play-btn").classList.add("d-none");
+    document.getElementById("menü-btn").classList.add("d-none");
     document.getElementById("game-overlay").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
     document.getElementById("help-bar").classList.add("d-none");

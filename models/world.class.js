@@ -56,11 +56,13 @@ class World {
      * Starts the main game loop with periodic checks and updates.
      */
     run() {
-        this.checkCollisions();
-        this.checkThrowObjects();
-        this.addNewBottels();
-        this.handleGameStatus();
-        this.checkMuteStatus();
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkThrowObjects();
+            this.addNewBottels();
+            this.handleGameStatus();
+            this.checkMuteStatus();
+        }, 1000 / 8);
     }
 
     /**
@@ -242,10 +244,12 @@ class World {
      * Periodically checks for collisions between the character, enemies, throwable objects, coins, and the endboss.
      */
     checkCollisions() {
-        this.checkEnemyCollisions();
-        this.checkThrowableObjectCollisions();
-        this.checkCoinCollisions();
-        this.checkEndbossCollisions();
+        setInterval(() => {
+            this.checkEnemyCollisions();
+            this.checkThrowableObjectCollisions();
+            this.checkCoinCollisions();
+            this.checkEndbossCollisions();
+        }, 1000 / 100);
     }
 
     /**
@@ -352,7 +356,6 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.ctx.translate(-this.camera_x, 0);
         requestAnimationFrame(() => this.draw());
-        this.run();
     }
 
     /**
